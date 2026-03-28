@@ -1,13 +1,11 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import WorkCard from '../../components/WorkCard.astro';
 
 const works = [
   {
     slug: 'project-one',
     title: 'PROJECT ONE',
     description: 'A web application built with modern technologies',
-    cover: '/images/works/project1.jpg',
     tags: ['Web', 'React', 'TypeScript'],
     year: '2024',
   },
@@ -15,7 +13,6 @@ const works = [
     slug: 'project-two',
     title: 'PROJECT TWO',
     description: 'Mobile app for productivity enthusiasts',
-    cover: '/images/works/project2.jpg',
     tags: ['Mobile', 'Flutter'],
     year: '2024',
   },
@@ -23,28 +20,235 @@ const works = [
     slug: 'project-three',
     title: 'PROJECT THREE',
     description: 'Data visualization dashboard',
-    cover: '/images/works/project3.jpg',
     tags: ['Data', 'D3.js', 'Python'],
     year: '2023',
   },
 ];
 ---
 
-<Layout title="Works - Your Name" currentPage="/works">
-  <div class="min-h-screen pt-24 pb-16 px-6 md:px-8">
-    <div class="max-w-7xl mx-auto">
-      <header class="text-center mb-16">
-        <h1 class="heading-lg mb-4">WORKS</h1>
-        <p class="text-body text-gray-400 tracking-[0.2em] uppercase">
+<Layout title="Works - Personal Page" currentPage="/works">
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">WORKS</span>
+        </h1>
+        <p class="page-subtitle">
           MY CREATIVE PROJECTS
         </p>
       </header>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
-        {works.map((work) => (
-          <WorkCard work={work} />
+      <nav class="items-nav">
+        {works.map((work, index) => (
+          <a 
+            href={`/works/${work.slug}`}
+            class="item-link"
+            style={`animation-delay: ${(index + 1) * 0.1}s`}
+          >
+            <span class="item-number">{String(index + 1).padStart(2, '0')}</span>
+            <div class="item-info">
+              <h2 class="item-title">
+                {work.title}
+              </h2>
+              <p class="item-meta">
+                {work.description}
+              </p>
+              <div class="item-tags">
+                {work.tags.join(' · ')} · {work.year}
+              </div>
+            </div>
+          </a>
         ))}
-      </div>
+      </nav>
     </div>
   </div>
 </Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .page-subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .items-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .items-nav {
+      gap: 1.5rem;
+    }
+  }
+
+  .item-link {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    padding: 1.5rem 1rem;
+    border-bottom: 1px solid rgb(31, 41, 55);
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .item-link {
+      gap: 2.5rem;
+      padding: 2rem;
+    }
+  }
+
+  .item-link:hover {
+    padding-left: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .item-link:hover {
+      padding-left: 3rem;
+    }
+  }
+
+  .item-link:hover .item-title {
+    letter-spacing: 0.2em;
+    color: rgb(156, 163, 175);
+  }
+
+  .item-number {
+    color: rgb(75, 85, 99);
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    font-weight: 500;
+    transition: all 0.5s;
+  }
+
+  @media (min-width: 768px) {
+    .item-number {
+      font-size: 1rem;
+    }
+  }
+
+  .item-link:hover .item-number {
+    opacity: 0.5;
+  }
+
+  .item-info {
+    flex: 1;
+  }
+
+  .item-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.5s ease-in-out;
+  }
+
+  @media (min-width: 768px) {
+    .item-title {
+      font-size: 1.875rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .item-title {
+      font-size: 2.25rem;
+    }
+  }
+
+  .item-meta {
+    color: rgb(107, 114, 128);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    margin-top: 0.25rem;
+  }
+
+  @media (min-width: 768px) {
+    .item-meta {
+      font-size: 0.875rem;
+      margin-top: 0.5rem;
+    }
+  }
+
+  .item-tags {
+    color: rgb(75, 85, 99);
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-top: 0.25rem;
+  }
+</style>

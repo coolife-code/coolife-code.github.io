@@ -1,39 +1,154 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
-const pageTitle = 'YOUR NAME';
-const subtitle = 'READER • CREATOR • THINKER';
+const titleWords = ['EVEN', 'THE', 'DEVIL', 'SMILES'];
+const subtitle = '"EVERYONE KNOWS" FEAT. RZA';
 ---
 
-<Layout title="Your Name - Personal Page" currentPage="/">
-  <div class="min-h-screen flex flex-col items-center justify-center px-6 md:px-8">
-    <div class="text-center">
-      <h1 class="heading-xl mb-6">
-        {pageTitle.split('').map((char, i) => (
-          <span class="inline-block" style={`animation-delay: ${i * 0.05}s`}>
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        ))}
-      </h1>
+<Layout title="Even the Devil Smiles - Personal Page" currentPage="/">
+  <div class="home-container">
+    <div class="home-content">
+      <a href="https://thr33dot.ffm.to/etds" target="_blank" rel="noopener noreferrer" class="home-link">
+        <h1 class="home-title">
+          {titleWords.map((word, wordIndex) => (
+            <span 
+              class="word-block" 
+              style={`animation-delay: ${wordIndex * 0.15}s`}
+            >
+              {word}
+            </span>
+          ))}
+        </h1>
+      </a>
       
-      <p class="text-body text-gray-400 tracking-[0.3em] uppercase">
+      <p class="subtitle animate-fade-in" style="animation-delay: 0.8s">
         {subtitle}
       </p>
     </div>
 
-    <div class="absolute bottom-12 left-1/2 -translate-x-1/2">
-      <a href="/books" class="btn-primary">
+    <div class="explore-container animate-fade-in" style="animation-delay: 1.2s">
+      <button 
+        id="explore-btn"
+        class="btn-explore"
+      >
         EXPLORE
-      </a>
+      </button>
     </div>
   </div>
 </Layout>
 
 <style>
+  .home-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    position: relative;
+  }
+
+  @media (min-width: 768px) {
+    .home-container {
+      padding: 2rem;
+    }
+  }
+
+  .home-content {
+    text-align: center;
+  }
+
+  .home-link {
+    display: block;
+  }
+
+  .home-title {
+    margin-bottom: 1rem;
+  }
+
+  .word-block {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  @media (min-width: 768px) {
+    .word-block {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .word-block {
+      font-size: 4.5rem;
+    }
+  }
+
+  @media (min-width: 1280px) {
+    .word-block {
+      font-size: 6rem;
+    }
+  }
+
+  .home-link:hover .word-block {
+    transform: translateY(-2px);
+    transition: transform 0.3s ease;
+  }
+
+  .subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    margin-top: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 1s ease-out forwards;
+    opacity: 0;
+  }
+
+  .explore-container {
+    position: absolute;
+    bottom: 3rem;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .btn-explore {
+    color: white;
+    font-size: 0.875rem;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.5s ease-in-out;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 1rem 2rem;
+  }
+
+  .btn-explore:hover {
+    letter-spacing: 0.6em;
+    opacity: 0.7;
+  }
+
   @keyframes fadeInUp {
     from {
       opacity: 0;
-      transform: translateY(20px);
+      transform: translateY(30px);
     }
     to {
       opacity: 1;
@@ -41,8 +156,21 @@ const subtitle = 'READER • CREATOR • THINKER';
     }
   }
 
-  h1 span {
-    animation: fadeInUp 0.6s ease-out forwards;
-    opacity: 0;
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
   }
 </style>
+
+<script>
+  const exploreBtn = document.getElementById('explore-btn');
+  
+  exploreBtn?.addEventListener('click', () => {
+    const menuToggle = document.getElementById('menu-toggle') as HTMLButtonElement;
+    menuToggle?.click();
+  });
+</script>

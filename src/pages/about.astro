@@ -2,52 +2,191 @@
 import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="About - Your Name" currentPage="/about">
-  <div class="min-h-screen pt-24 pb-16 px-6 md:px-8">
-    <div class="max-w-4xl mx-auto">
-      <header class="text-center mb-16">
-        <h1 class="heading-lg mb-4">ABOUT</h1>
+<Layout title="About - Personal Page" currentPage="/about">
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">ABOUT</span>
+        </h1>
       </header>
 
-      <div class="text-center mb-16">
-        <div class="w-32 h-32 md:w-48 md:h-48 mx-auto mb-8 rounded-full bg-gray-800 overflow-hidden">
-          <div class="w-full h-full flex items-center justify-center">
-            <span class="text-4xl md:text-6xl text-gray-600">?</span>
-          </div>
+      <div class="about-content">
+        <div class="about-text">
+          <p class="about-paragraph" style="animation-delay: 0.2s">
+            Welcome to my personal space on the internet.
+          </p>
+          <p class="about-paragraph" style="animation-delay: 0.3s">
+            This is where I document my reading journey and creative projects. 
+            Each book I read opens a new world, and each project I create is an expression of my curiosity.
+          </p>
+          <p class="about-paragraph" style="animation-delay: 0.4s">
+            I believe in the power of continuous learning and creation. 
+            Through reading, we understand the world; through creating, we understand ourselves.
+          </p>
         </div>
-      </div>
 
-      <div class="prose prose-invert prose-lg max-w-none text-center mb-16">
-        <p class="text-body text-gray-300 leading-relaxed mb-6">
-          欢迎来到我的个人页面。这里记录了我读过的书和创作的作品。
-        </p>
-        <p class="text-body text-gray-300 leading-relaxed mb-6">
-          我相信阅读和创作是认识世界、认识自己的最好方式。每一本书都是一次旅行，每一个作品都是一次表达。
-        </p>
-        <p class="text-body text-gray-300 leading-relaxed">
-          希望你能在这里找到一些有趣的东西。
-        </p>
-      </div>
-
-      <div class="text-center">
-        <h2 class="heading-md mb-8">CONNECT</h2>
-        <div class="flex flex-wrap justify-center gap-4">
-          <a 
-            href="https://github.com" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            class="btn-primary"
-          >
-            GITHUB
-          </a>
-          <a 
-            href="mailto:your@email.com" 
-            class="btn-primary"
-          >
-            EMAIL
-          </a>
+        <div class="connect-section" style="animation-delay: 0.5s">
+          <h2 class="connect-title">CONNECT</h2>
+          <div class="connect-links">
+            <a 
+              href="https://github.com/coolife-code" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              class="connect-link"
+            >
+              GITHUB
+            </a>
+            <a 
+              href="mailto:hello@example.com" 
+              class="connect-link"
+            >
+              EMAIL
+            </a>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 4rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .about-content {
+    text-align: center;
+  }
+
+  .about-text {
+    margin-bottom: 5rem;
+  }
+
+  .about-paragraph {
+    color: rgb(156, 163, 175);
+    font-size: 1rem;
+    line-height: 2;
+    margin-bottom: 1.5rem;
+    max-width: 36rem;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .about-paragraph {
+      font-size: 1.125rem;
+    }
+  }
+
+  .connect-section {
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .connect-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .connect-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  .connect-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1.5rem;
+  }
+
+  .connect-link {
+    color: white;
+    font-size: 0.875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 500;
+    transition: all 0.5s ease-in-out;
+    padding: 0.75rem 1.5rem;
+    border: 1px solid rgb(55, 65, 81);
+  }
+
+  @media (min-width: 768px) {
+    .connect-link {
+      font-size: 1rem;
+    }
+  }
+
+  .connect-link:hover {
+    letter-spacing: 0.5em;
+    background: rgb(31, 41, 55);
+  }
+</style>
