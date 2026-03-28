@@ -1,0 +1,135 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const books = [
+    {
+      slug: 'the-great-gatsby',
+      title: 'THE GREAT GATSBY',
+      author: 'F. Scott Fitzgerald',
+      year: '1925',
+      readDate: '2024年3月',
+      rating: 5,
+      theme: 'gold',
+      quote: 'So we beat on, boats against the current, borne back ceaselessly into the past.',
+      content: `
+这是一本关于美国梦的书。盖茨比的悲剧在于他追逐的是一个幻影，一个已经逝去的过去。
+
+菲茨杰拉德用华丽的文字描绘了爵士时代的浮华与空虚。盖茨比的派对、黛西的声音、那盏绿灯——每一个意象都充满了象征意义。
+
+读完这本书，我开始思考：我们每个人心中是否都有一个"绿灯"？我们追逐的，是否也只是一个幻影？
+      `,
+      tags: ['美国文学', '经典', '爵士时代'],
+    },
+    {
+      slug: '1984',
+      title: '1984',
+      author: 'George Orwell',
+      year: '1949',
+      readDate: '2024年1月',
+      rating: 5,
+      theme: 'red',
+      quote: 'War is peace. Freedom is slavery. Ignorance is strength.',
+      content: `
+奥威尔的预言令人不寒而栗。在这个世界里，历史可以被篡改，思想可以被控制，语言可以被简化。
+
+温斯顿的反抗是徒劳的，但这正是奥威尔想要表达的——在极权主义面前，个人的力量是多么渺小。
+
+这本书让我重新审视了自由、真相和权力的意义。
+      `,
+      tags: ['反乌托邦', '政治', '经典'],
+    },
+    {
+      slug: 'crime-and-punishment',
+      title: 'CRIME AND PUNISHMENT',
+      author: 'Fyodor Dostoevsky',
+      year: '1866',
+      readDate: '2023年12月',
+      rating: 5,
+      theme: 'dark',
+      quote: 'Pain and suffering are always inevitable for a large intelligence and a deep heart.',
+      content: `
+陀思妥耶夫斯基深入探索了人性的黑暗面。拉斯科尔尼科夫的理论——"非凡人"可以超越道德——最终被他自己否定。
+
+这本书不仅是关于犯罪和惩罚，更是关于救赎。索尼娅代表了信仰和爱，她拯救了拉斯科尔尼科夫的灵魂。
+
+读完这本书，我对"罪"与"罚"有了更深的理解。
+      `,
+      tags: ['俄国文学', '心理学', '经典'],
+    },
+  ];
+
+  return books.map((book) => ({
+    params: { slug: book.slug },
+    props: { book },
+  }));
+}
+
+const { book } = Astro.props;
+
+const themeColors: Record<string, string> = {
+  gold: 'from-yellow-900/20 to-black',
+  red: 'from-red-900/20 to-black',
+  dark: 'from-gray-800 to-black',
+  blue: 'from-blue-900/20 to-black',
+  green: 'from-green-900/20 to-black',
+};
+
+const themeAccent: Record<string, string> = {
+  gold: 'text-yellow-500',
+  red: 'text-red-500',
+  dark: 'text-gray-400',
+  blue: 'text-blue-500',
+  green: 'text-green-500',
+};
+---
+
+<Layout title={`${book.title} - Your Name`} currentPage="/books">
+  <article class={`min-h-screen bg-gradient-to-b ${themeColors[book.theme] || 'from-gray-900 to-black'}`}>
+    <div class="pt-24 pb-16 px-6 md:px-8">
+      <div class="max-w-4xl mx-auto">
+        <header class="text-center mb-16">
+          <h1 class="heading-lg mb-4">{book.title}</h1>
+          <p class="text-body text-gray-400 tracking-[0.2em] uppercase mb-2">
+            {book.author}
+          </p>
+          <p class="text-sm text-gray-500 tracking-[0.1em]">
+            {book.year} • {book.readDate}
+          </p>
+          
+          <div class="flex justify-center gap-1 mt-4">
+            {Array.from({ length: 5 }).map((_, i) => (
+              <span class={`text-xl ${i < book.rating ? themeAccent[book.theme] : 'text-gray-700'}`}>★</span>
+            ))}
+          </div>
+        </header>
+
+        <blockquote class={`text-center text-xl md:text-2xl italic ${themeAccent[book.theme]} mb-12 max-w-2xl mx-auto`}>
+          "{book.quote}"
+        </blockquote>
+
+        <div class="prose prose-invert prose-lg max-w-none mb-12">
+          {book.content.trim().split('\n\n').map((paragraph: string) => (
+            <p class="text-body text-gray-300 leading-relaxed mb-6">
+              {paragraph.trim()}
+            </p>
+          ))}
+        </div>
+
+        <div class="flex flex-wrap gap-2 justify-center mb-12">
+          {book.tags.map((tag: string) => (
+            <span class="px-4 py-2 border border-gray-700 text-xs tracking-[0.2em] uppercase text-gray-400">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div class="text-center">
+          <a href="/books" class="btn-primary">
+            BACK TO BOOKS
+          </a>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>

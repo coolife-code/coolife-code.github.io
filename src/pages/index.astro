@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const pageTitle = 'YOUR NAME';
+const subtitle = 'READER • CREATOR • THINKER';
+---
+
+<Layout title="Your Name - Personal Page" currentPage="/">
+  <div class="min-h-screen flex flex-col items-center justify-center px-6 md:px-8">
+    <div class="text-center">
+      <h1 class="heading-xl mb-6">
+        {pageTitle.split('').map((char, i) => (
+          <span class="inline-block" style={`animation-delay: ${i * 0.05}s`}>
+            {char === ' ' ? '\u00A0' : char}
+          </span>
+        ))}
+      </h1>
+      
+      <p class="text-body text-gray-400 tracking-[0.3em] uppercase">
+        {subtitle}
+      </p>
+    </div>
+
+    <div class="absolute bottom-12 left-1/2 -translate-x-1/2">
+      <a href="/books" class="btn-primary">
+        EXPLORE
+      </a>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  h1 span {
+    animation: fadeInUp 0.6s ease-out forwards;
+    opacity: 0;
+  }
+</style>

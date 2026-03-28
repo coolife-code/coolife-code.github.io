@@ -1,0 +1,53 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="About - Your Name" currentPage="/about">
+  <div class="min-h-screen pt-24 pb-16 px-6 md:px-8">
+    <div class="max-w-4xl mx-auto">
+      <header class="text-center mb-16">
+        <h1 class="heading-lg mb-4">ABOUT</h1>
+      </header>
+
+      <div class="text-center mb-16">
+        <div class="w-32 h-32 md:w-48 md:h-48 mx-auto mb-8 rounded-full bg-gray-800 overflow-hidden">
+          <div class="w-full h-full flex items-center justify-center">
+            <span class="text-4xl md:text-6xl text-gray-600">?</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="prose prose-invert prose-lg max-w-none text-center mb-16">
+        <p class="text-body text-gray-300 leading-relaxed mb-6">
+          欢迎来到我的个人页面。这里记录了我读过的书和创作的作品。
+        </p>
+        <p class="text-body text-gray-300 leading-relaxed mb-6">
+          我相信阅读和创作是认识世界、认识自己的最好方式。每一本书都是一次旅行，每一个作品都是一次表达。
+        </p>
+        <p class="text-body text-gray-300 leading-relaxed">
+          希望你能在这里找到一些有趣的东西。
+        </p>
+      </div>
+
+      <div class="text-center">
+        <h2 class="heading-md mb-8">CONNECT</h2>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a 
+            href="https://github.com" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            class="btn-primary"
+          >
+            GITHUB
+          </a>
+          <a 
+            href="mailto:your@email.com" 
+            class="btn-primary"
+          >
+            EMAIL
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

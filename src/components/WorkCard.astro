@@ -1,0 +1,51 @@
+---
+interface Work {
+  slug: string;
+  title: string;
+  description: string;
+  cover: string;
+  tags: string[];
+  year: string;
+}
+
+interface Props {
+  work: Work;
+}
+
+const { work } = Astro.props;
+---
+
+<a 
+  href={`/works/${work.slug}`} 
+  class="block group"
+>
+  <div class="aspect-video bg-gray-900 overflow-hidden mb-4">
+    {work.cover ? (
+      <img 
+        src={work.cover} 
+        alt={work.title}
+        class="w-full h-full object-cover card-hover"
+      />
+    ) : (
+      <div class="w-full h-full flex items-center justify-center bg-gray-800">
+        <span class="heading-md text-gray-600">{work.title.charAt(0)}</span>
+      </div>
+    )}
+  </div>
+  
+  <div class="space-y-2">
+    <h3 class="text-sm tracking-[0.2em] uppercase font-medium group-hover:opacity-70 transition-opacity">
+      {work.title}
+    </h3>
+    <p class="text-xs text-gray-400 line-clamp-2">
+      {work.description}
+    </p>
+    <div class="flex flex-wrap gap-2">
+      {work.tags.slice(0, 3).map((tag) => (
+        <span class="text-xs tracking-[0.1em] text-gray-500">
+          {tag}
+        </span>
+      ))}
+    </div>
+  </div>
+</a>

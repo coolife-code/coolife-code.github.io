@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import BookCard from '../../components/BookCard.astro';
+
+const books = [
+  {
+    slug: 'the-great-gatsby',
+    title: 'THE GREAT GATSBY',
+    author: 'F. Scott Fitzgerald',
+    cover: '/images/books/gatsby.jpg',
+    theme: 'gold',
+    year: '2024',
+  },
+  {
+    slug: '1984',
+    title: '1984',
+    author: 'George Orwell',
+    cover: '/images/books/1984.jpg',
+    theme: 'red',
+    year: '2024',
+  },
+  {
+    slug: 'crime-and-punishment',
+    title: 'CRIME AND PUNISHMENT',
+    author: 'Fyodor Dostoevsky',
+    cover: '/images/books/crime.jpg',
+    theme: 'dark',
+    year: '2023',
+  },
+];
+---
+
+<Layout title="Books - Your Name" currentPage="/books">
+  <div class="min-h-screen pt-24 pb-16 px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <header class="text-center mb-16">
+        <h1 class="heading-lg mb-4">BOOKS</h1>
+        <p class="text-body text-gray-400 tracking-[0.2em] uppercase">
+          MY READING JOURNEY
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        {books.map((book) => (
+          <BookCard book={book} />
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>

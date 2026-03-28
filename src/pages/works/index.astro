@@ -1,0 +1,50 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import WorkCard from '../../components/WorkCard.astro';
+
+const works = [
+  {
+    slug: 'project-one',
+    title: 'PROJECT ONE',
+    description: 'A web application built with modern technologies',
+    cover: '/images/works/project1.jpg',
+    tags: ['Web', 'React', 'TypeScript'],
+    year: '2024',
+  },
+  {
+    slug: 'project-two',
+    title: 'PROJECT TWO',
+    description: 'Mobile app for productivity enthusiasts',
+    cover: '/images/works/project2.jpg',
+    tags: ['Mobile', 'Flutter'],
+    year: '2024',
+  },
+  {
+    slug: 'project-three',
+    title: 'PROJECT THREE',
+    description: 'Data visualization dashboard',
+    cover: '/images/works/project3.jpg',
+    tags: ['Data', 'D3.js', 'Python'],
+    year: '2023',
+  },
+];
+---
+
+<Layout title="Works - Your Name" currentPage="/works">
+  <div class="min-h-screen pt-24 pb-16 px-6 md:px-8">
+    <div class="max-w-7xl mx-auto">
+      <header class="text-center mb-16">
+        <h1 class="heading-lg mb-4">WORKS</h1>
+        <p class="text-body text-gray-400 tracking-[0.2em] uppercase">
+          MY CREATIVE PROJECTS
+        </p>
+      </header>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12">
+        {works.map((work) => (
+          <WorkCard work={work} />
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
