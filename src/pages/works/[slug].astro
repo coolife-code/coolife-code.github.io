@@ -9,19 +9,7 @@ export async function getStaticPaths() {
       description: 'A web application built with modern technologies',
       year: '2024',
       tags: ['Web', 'React', 'TypeScript', 'Tailwind CSS'],
-      content: `这是一个使用现代技术栈构建的 Web 应用程序。
-
-项目采用了 React 18 和 TypeScript，配合 Tailwind CSS 实现了响应式设计。后端使用 Node.js 和 PostgreSQL。
-
-主要功能包括：
-- 用户认证和授权
-- 实时数据同步
-- 响应式设计
-- 性能优化`,
-      links: [
-        { label: 'LIVE DEMO', url: 'https://example.com' },
-        { label: 'GITHUB', url: 'https://github.com' },
-      ],
+      image: '/images/work1.jpg',
     },
     {
       slug: 'project-two',
@@ -29,19 +17,7 @@ export async function getStaticPaths() {
       description: 'Mobile app for productivity enthusiasts',
       year: '2024',
       tags: ['Mobile', 'Flutter', 'Dart', 'Firebase'],
-      content: `这是一个使用 Flutter 构建的跨平台移动应用。
-
-应用帮助用户管理日常任务和习惯，支持 iOS 和 Android 平台。
-
-主要功能包括：
-- 任务管理
-- 习惯追踪
-- 数据统计
-- 云端同步`,
-      links: [
-        { label: 'APP STORE', url: 'https://apple.com' },
-        { label: 'PLAY STORE', url: 'https://play.google.com' },
-      ],
+      image: '/images/work2.jpg',
     },
     {
       slug: 'project-three',
@@ -49,19 +25,7 @@ export async function getStaticPaths() {
       description: 'Data visualization dashboard',
       year: '2023',
       tags: ['Data', 'D3.js', 'Python', 'Flask'],
-      content: `这是一个数据可视化仪表板项目。
-
-使用 D3.js 创建交互式图表，后端使用 Python Flask 提供 API 接口。
-
-主要功能包括：
-- 多种图表类型
-- 实时数据更新
-- 数据导出
-- 自定义主题`,
-      links: [
-        { label: 'LIVE DEMO', url: 'https://example.com' },
-        { label: 'GITHUB', url: 'https://github.com' },
-      ],
+      image: '/images/work3.jpg',
     },
   ];
 
@@ -75,60 +39,218 @@ const { work } = Astro.props;
 ---
 
 <Layout title={`${work.title} - Even The Devil Smiles`} currentPage="/works">
-  <article class="min-h-screen">
-    <div class="pt-32 pb-16 px-6 md:px-8">
-      <div class="max-w-4xl mx-auto">
-        <header class="text-center mb-16">
-          <h1 class="heading-lg mb-6">{work.title}</h1>
-          <p class="text-label text-gray-400 mb-4">
-            {work.description}
-          </p>
-          <p class="text-xs text-gray-600 tracking-[0.15em] uppercase">
-            {work.year}
-          </p>
-        </header>
+  <div class="detail-container">
+    <!-- 返回按钮 -->
+    <a href="/" class="back-btn">
+      <span class="back-arrow">←</span>
+      <span class="back-text">BACK</span>
+    </a>
 
-        <div class="aspect-video bg-gray-900 mb-16 overflow-hidden border border-gray-800">
-          <div class="w-full h-full flex items-center justify-center">
-            <span class="heading-md text-gray-700">PROJECT PREVIEW</span>
-          </div>
-        </div>
-
-        <div class="prose prose-invert max-w-none mb-16">
-          {work.content.trim().split('\n\n').map((paragraph: string) => (
-            <p class="text-body text-gray-300 leading-loose mb-8">
-              {paragraph.trim()}
-            </p>
-          ))}
-        </div>
-
-        <div class="flex flex-wrap gap-3 justify-center mb-16">
-          {work.tags.map((tag: string) => (
-            <span class="px-5 py-2 border border-gray-800 text-xs tracking-[0.2em] uppercase text-gray-500">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div class="flex flex-wrap gap-6 justify-center mb-16">
-          {work.links.map((link: { label: string; url: string }) => (
-            <a 
-              href={link.url} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="btn-primary"
-            >
-              {link.label}
-            </a>
-          ))}
-        </div>
-
-        <div class="text-center">
-          <a href="/works" class="btn-primary">
-            BACK TO WORKS
-          </a>
+    <!-- 主图展示 -->
+    <div class="hero-section">
+      <div class="image-frame">
+        <div class="image-placeholder">
+          <span class="placeholder-text">{work.title}</span>
         </div>
       </div>
     </div>
-  </article>
+
+    <!-- 信息区 -->
+    <div class="info-section">
+      <h1 class="detail-title">{work.title}</h1>
+      <p class="detail-year">{work.year}</p>
+      <p class="detail-description">{work.description}</p>
+      
+      <div class="tags-list">
+        {work.tags.map((tag: string) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="nav-dots">
+      <a href="/" class="nav-dot" title="Back to Explore"></a>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .detail-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+  }
+
+  /* 返回按钮 */
+  .back-btn {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    text-decoration: none;
+    z-index: 50;
+    transition: all 0.3s ease;
+  }
+
+  .back-btn:hover {
+    opacity: 0.7;
+  }
+
+  .back-arrow {
+    font-size: 1.25rem;
+  }
+
+  .back-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+  }
+
+  /* 主图区 */
+  .hero-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .image-frame {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4/5;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 768px) {
+    .image-frame {
+      padding: 2rem;
+    }
+  }
+
+  .image-frame:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 80px rgba(255, 255, 255, 0.08);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.03) 50%),
+      linear-gradient(transparent 50%, rgba(255,255,255,0.03) 50%);
+    background-size: 20px 20px;
+    opacity: 0.5;
+  }
+
+  .placeholder-text {
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    color: white;
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .placeholder-text {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* 信息区 */
+  .info-section {
+    text-align: center;
+    margin-top: 3rem;
+    max-width: 500px;
+  }
+
+  .detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .detail-title {
+      font-size: 2rem;
+    }
+  }
+
+  .detail-year {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.2em;
+    margin-bottom: 1rem;
+  }
+
+  .detail-description {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .tags-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.75rem;
+  }
+
+  .tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    color: rgba(255, 255, 255, 0.5);
+    text-transform: uppercase;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  /* 底部导航点 */
+  .nav-dots {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 50;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .nav-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.3);
+  }
+</style>

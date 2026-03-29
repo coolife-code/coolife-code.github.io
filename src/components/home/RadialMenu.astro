@@ -1,0 +1,66 @@
+---
+import { navItems } from '../../data/site';
+---
+
+<!-- 圆盘导航菜单 -->
+<div id="radial-menu" class="radial-menu">
+  <div class="menu-overlay" id="menu-overlay-bg">
+    <div class="menu-container">
+      <!-- 菜单头部 -->
+      <div class="menu-header">
+        <span class="menu-title">MENU</span>
+        <button id="radial-menu-close" class="menu-close">×</button>
+      </div>
+
+      <!-- 圆盘导航 -->
+      <div class="radial-nav">
+        {navItems.map((item) => (
+          <a
+            href={item.id === 'explore' ? '#' : `/${item.id}`}
+            class="radial-item"
+            data-id={item.id}
+            style={`--angle: ${item.angle}deg;`}
+          >
+            <span class="radial-label">{item.label}</span>
+          </a>
+        ))}
+      </div>
+
+
+    </div>
+  </div>
+</div>
+
+<script>
+  // 径向菜单关闭功能
+  document.addEventListener('DOMContentLoaded', () => {
+    const radialMenu = document.getElementById('radial-menu');
+    const menuClose = document.getElementById('radial-menu-close');
+    const menuOverlayBg = document.getElementById('menu-overlay-bg');
+
+    function closeRadialMenu() {
+      radialMenu?.classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    // 关闭按钮点击事件
+    menuClose?.addEventListener('click', (e) => {
+      e.stopPropagation();
+      closeRadialMenu();
+    });
+
+    // 点击背景关闭
+    menuOverlayBg?.addEventListener('click', (e) => {
+      if (e.target === menuOverlayBg) {
+        closeRadialMenu();
+      }
+    });
+
+    // ESC键关闭
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && radialMenu?.classList.contains('active')) {
+        closeRadialMenu();
+      }
+    });
+  });
+</script>

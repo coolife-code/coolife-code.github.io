@@ -8,48 +8,21 @@ export async function getStaticPaths() {
       title: 'THE GREAT GATSBY',
       author: 'F. Scott Fitzgerald',
       year: '1925',
-      readDate: '2024年3月',
-      rating: 5,
-      theme: 'gold',
-      quote: 'So we beat on, boats against the current, borne back ceaselessly into the past.',
-      content: `这是一本关于美国梦的书。盖茨比的悲剧在于他追逐的是一个幻影，一个已经逝去的过去。
-
-菲茨杰拉德用华丽的文字描绘了爵士时代的浮华与空虚。盖茨比的派对、黛西的声音、那盏绿灯——每一个意象都充满了象征意义。
-
-读完这本书，我开始思考：我们每个人心中是否都有一个"绿灯"？我们追逐的，是否也只是一个幻影？`,
-      tags: ['美国文学', '经典', '爵士时代'],
+      image: '/images/book1.jpg',
     },
     {
       slug: '1984',
       title: '1984',
       author: 'George Orwell',
       year: '1949',
-      readDate: '2024年1月',
-      rating: 5,
-      theme: 'red',
-      quote: 'War is peace. Freedom is slavery. Ignorance is strength.',
-      content: `奥威尔的预言令人不寒而栗。在这个世界里，历史可以被篡改，思想可以被控制，语言可以被简化。
-
-温斯顿的反抗是徒劳的，但这正是奥威尔想要表达的——在极权主义面前，个人的力量是多么渺小。
-
-这本书让我重新审视了自由、真相和权力的意义。`,
-      tags: ['反乌托邦', '政治', '经典'],
+      image: '/images/book2.jpg',
     },
     {
       slug: 'crime-and-punishment',
       title: 'CRIME AND PUNISHMENT',
       author: 'Fyodor Dostoevsky',
       year: '1866',
-      readDate: '2023年12月',
-      rating: 5,
-      theme: 'dark',
-      quote: 'Pain and suffering are always inevitable for a large intelligence and a deep heart.',
-      content: `陀思妥耶夫斯基深入探索了人性的黑暗面。拉斯科尔尼科夫的理论——"非凡人"可以超越道德——最终被他自己否定。
-
-这本书不仅是关于犯罪和惩罚，更是关于救赎。索尼娅代表了信仰和爱，她拯救了拉斯科尔尼科夫的灵魂。
-
-读完这本书，我对"罪"与"罚"有了更深的理解。`,
-      tags: ['俄国文学', '心理学', '经典'],
+      image: '/images/book3.jpg',
     },
   ];
 
@@ -60,62 +33,198 @@ export async function getStaticPaths() {
 }
 
 const { book } = Astro.props;
-
-const themeAccent: Record<string, string> = {
-  gold: 'text-yellow-500',
-  red: 'text-red-500',
-  dark: 'text-gray-400',
-  blue: 'text-blue-500',
-  green: 'text-green-500',
-};
 ---
 
 <Layout title={`${book.title} - Even The Devil Smiles`} currentPage="/books">
-  <article class="min-h-screen">
-    <div class="pt-32 pb-16 px-6 md:px-8">
-      <div class="max-w-4xl mx-auto">
-        <header class="text-center mb-16">
-          <h1 class="heading-lg mb-6">{book.title}</h1>
-          <p class="text-label text-gray-400 mb-2">
-            {book.author}
-          </p>
-          <p class="text-xs text-gray-600 tracking-[0.15em] uppercase">
-            {book.year} • {book.readDate}
-          </p>
-          
-          <div class="flex justify-center gap-2 mt-6">
-            {Array.from({ length: 5 }).map((_, i) => (
-              <span class={`text-lg ${i < book.rating ? themeAccent[book.theme] : 'text-gray-700'}`}>★</span>
-            ))}
-          </div>
-        </header>
+  <div class="detail-container">
+    <!-- 返回按钮 -->
+    <a href="/" class="back-btn">
+      <span class="back-arrow">←</span>
+      <span class="back-text">BACK</span>
+    </a>
 
-        <blockquote class={`text-center text-lg md:text-xl italic ${themeAccent[book.theme]} mb-16 max-w-2xl mx-auto leading-relaxed`}>
-          "{book.quote}"
-        </blockquote>
-
-        <div class="prose prose-invert max-w-none mb-16">
-          {book.content.trim().split('\n\n').map((paragraph: string) => (
-            <p class="text-body text-gray-300 leading-loose mb-8">
-              {paragraph.trim()}
-            </p>
-          ))}
-        </div>
-
-        <div class="flex flex-wrap gap-3 justify-center mb-16">
-          {book.tags.map((tag: string) => (
-            <span class="px-5 py-2 border border-gray-800 text-xs tracking-[0.2em] uppercase text-gray-500">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        <div class="text-center">
-          <a href="/books" class="btn-primary">
-            BACK TO BOOKS
-          </a>
+    <!-- 主图展示 -->
+    <div class="hero-section">
+      <div class="image-frame">
+        <div class="image-placeholder">
+          <span class="placeholder-text">{book.title}</span>
         </div>
       </div>
     </div>
-  </article>
+
+    <!-- 信息区 -->
+    <div class="info-section">
+      <h1 class="detail-title">{book.title}</h1>
+      <p class="detail-author">{book.author}</p>
+      <p class="detail-year">{book.year}</p>
+    </div>
+
+    <!-- 底部导航 -->
+    <div class="nav-dots">
+      <a href="/" class="nav-dot" title="Back to Explore"></a>
+    </div>
+  </div>
 </Layout>
+
+<style>
+  .detail-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 6rem 2rem 4rem;
+    position: relative;
+  }
+
+  /* 返回按钮 */
+  .back-btn {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: white;
+    text-decoration: none;
+    z-index: 50;
+    transition: all 0.3s ease;
+  }
+
+  .back-btn:hover {
+    opacity: 0.7;
+  }
+
+  .back-arrow {
+    font-size: 1.25rem;
+  }
+
+  .back-text {
+    font-size: 0.75rem;
+    letter-spacing: 0.3em;
+  }
+
+  /* 主图区 */
+  .hero-section {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .image-frame {
+    width: 100%;
+    max-width: 500px;
+    aspect-ratio: 4/5;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 1.5rem;
+    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @media (min-width: 768px) {
+    .image-frame {
+      padding: 2rem;
+    }
+  }
+
+  .image-frame:hover {
+    transform: scale(1.02);
+    box-shadow: 0 0 80px rgba(255, 255, 255, 0.08);
+  }
+
+  .image-placeholder {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .image-placeholder::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: 
+      linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.03) 50%),
+      linear-gradient(transparent 50%, rgba(255,255,255,0.03) 50%);
+    background-size: 20px 20px;
+    opacity: 0.5;
+  }
+
+  .placeholder-text {
+    font-size: 1.25rem;
+    letter-spacing: 0.2em;
+    color: white;
+    text-transform: uppercase;
+    z-index: 1;
+  }
+
+  @media (min-width: 768px) {
+    .placeholder-text {
+      font-size: 1.5rem;
+    }
+  }
+
+  /* 信息区 */
+  .info-section {
+    text-align: center;
+    margin-top: 3rem;
+    max-width: 500px;
+  }
+
+  .detail-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .detail-title {
+      font-size: 2rem;
+    }
+  }
+
+  .detail-author {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.7);
+    letter-spacing: 0.15em;
+    margin-bottom: 0.5rem;
+  }
+
+  .detail-year {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.2em;
+  }
+
+  /* 底部导航点 */
+  .nav-dots {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 1rem;
+    z-index: 50;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+  }
+
+  .nav-dot:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.3);
+  }
+</style>

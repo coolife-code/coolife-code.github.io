@@ -1,0 +1,52 @@
+---
+import { allItems } from '../../data/site';
+import DotMatrixText from '../DotMatrixText.astro';
+---
+
+<!-- 深度预览层 -->
+<div id="depth-layer" class="layer depth-layer">
+  <div class="depth-container">
+    <div class="depth-title">
+      <span class="depth-label">EXPLORE THE DEPTH</span>
+    </div>
+    
+    <div id="depth-items" class="depth-items">
+      {allItems.map((item, index) => (
+        <a 
+          href={`/${item.type}s/${item.slug}`}
+          class="depth-item"
+          data-depth={item.depth}
+          style={`--item-index: ${index};`}
+        >
+          <div class="item-frame">
+            <div class="item-image-placeholder">
+              <span class="item-title-text">{item.title}</span>
+            </div>
+          </div>
+          <span class="item-label">{item.type.toUpperCase()} · {String(index + 1).padStart(2, '0')}</span>
+        </a>
+      ))}
+    </div>
+
+    <div class="depth-indicator">
+      <span id="depth-counter">0</span>
+      <span class="depth-unit">m</span>
+    </div>
+  </div>
+
+  <!-- 深度模式下的底部栏 -->
+  <div class="bottom-bar depth-bottom-bar">
+    <button 
+      id="explore-btn-depth"
+      class="explore-trigger"
+    >
+      <DotMatrixText 
+        text="EXPLORE" 
+        dotSize={3}
+        dotSpacing={2}
+        charSpacing={4}
+        class="explore-dot-matrix"
+      />
+    </button>
+  </div>
+</div>

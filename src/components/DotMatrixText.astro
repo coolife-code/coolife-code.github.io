@@ -1,0 +1,115 @@
+---
+import { textToMatrix } from '../utils/dotMatrix.js';
+
+interface Props {
+  text: string;
+  dotSize?: number;
+  dotSpacing?: number;
+  charSpacing?: number;
+  activeColor?: string;
+  inactiveColor?: string;
+  class?: string;
+  animate?: boolean;
+  animationDelay?: number;
+  animationDuration?: number;
+}
+
+const {
+  text,
+  dotSize = 3,
+  dotSpacing = 2,
+  charSpacing = 4,
+  activeColor = 'currentColor',
+  inactiveColor = 'transparent',
+  class: className = '',
+  animate = false,
+  animationDelay = 0,
+  animationDuration = 0.5,
+} = Astro.props;
+
+const matrices = textToMatrix(text);
+const charWidth = 5;
+const charHeight = 7;
+
+// 计算总宽度和高度
+const totalWidth = matrices.length * (charWidth * (dotSize + dotSpacing) - dotSpacing) + 
+                   (matrices.length - 1) * charSpacing;
+const totalHeight = charHeight * (dotSize + dotSpacing) - dotSpacing;
+
+// 生成点的位置数据
+function generateDots() {
+  const dots = [];
+  let currentX = 0;
+  
+  matrices.forEach((matrix, charIndex) => {
+    matrix.forEach((row, rowIndex) => {
+      row.forEach((cell, colIndex) => {
+        if (cell === 1) {
+          dots.push({
+            x: currentX + colIndex * (dotSize + dotSpacing),
+            y: rowIndex * (dotSize + dotSpacing),
+            charIndex,
+            dotIndex: dots.filter(d => d.charIndex === charIndex).length,
+          });
+        }
+      });
+    });
+    currentX += charWidth * (dotSize + dotSpacing) - dotSpacing + charSpacing;
+  });
+  
+  return dots;
+}
+
+const dots = generateDots();
+---
+
+<svg 
+  class={`dot-matrix-text ${className}`} 
+  width={totalWidth} 
+  height={totalHeight}
+  viewBox={`0 0 ${totalWidth} ${totalHeight}`}
+  xmlns="http://www.w3.org/2000/svg"
+  data-animate={animate}
+  data-animation-delay={animationDelay}
+  data-animation-duration={animationDuration}
+>
+  {dots.map((dot, index) => (
+    <rect
+      class="dot-matrix-dot"
+      x={dot.x}
+      y={dot.y}
+      width={dotSize}
+      height={dotSize}
+      fill={activeColor}
+      data-char-index={dot.charIndex}
+      data-dot-index={dot.dotIndex}
+      style={animate ? `
+        animation: dotMatrixFadeIn ${animationDuration}s ease-out forwards;
+        animation-delay: ${animationDelay + dot.charIndex * 0.05 + dot.dotIndex * 0.01}s;
+        opacity: 0;
+      ` : ''}
+    />
+  ))}
+</svg>
+
+<style>
+  .dot-matrix-text {
+    display: inline-block;
+    vertical-align: middle;
+  }
+  
+  .dot-matrix-dot {
+    shape-rendering: crispEdges;
+  }
+  
+  @keyframes dotMatrixFadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.5);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+</style>

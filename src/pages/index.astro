@@ -1,176 +1,36 @@
 ---
 import Layout from '../layouts/Layout.astro';
-
-const titleWords = ['EVEN', 'THE', 'DEVIL', 'SMILES'];
-const subtitle = '"EVERYONE KNOWS" FEAT. RZA';
+import HomeLayer from '../components/home/HomeLayer.astro';
+import RadialMenu from '../components/home/RadialMenu.astro';
+import DepthLayer from '../components/home/DepthLayer.astro';
+import { siteConfig } from '../data/site';
 ---
 
-<Layout title="Even the Devil Smiles - Personal Page" currentPage="/">
-  <div class="home-container">
-    <div class="home-content">
-      <a href="https://thr33dot.ffm.to/etds" target="_blank" rel="noopener noreferrer" class="home-link">
-        <h1 class="home-title">
-          {titleWords.map((word, wordIndex) => (
-            <span 
-              class="word-block" 
-              style={`animation-delay: ${wordIndex * 0.15}s`}
-            >
-              {word}
-            </span>
-          ))}
-        </h1>
-      </a>
-      
-      <p class="subtitle animate-fade-in" style="animation-delay: 0.8s">
-        {subtitle}
-      </p>
-    </div>
+<Layout title={siteConfig.title} currentPage="/">
+  <!-- 字体引入 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 
-    <div class="explore-container animate-fade-in" style="animation-delay: 1.2s">
-      <button 
-        id="explore-btn"
-        class="btn-explore"
-      >
-        EXPLORE
-      </button>
-    </div>
-  </div>
+  <!-- 首页层 -->
+  <HomeLayer />
+
+  <!-- 圆盘导航菜单 -->
+  <RadialMenu />
+
+  <!-- 深度预览层 -->
+  <DepthLayer />
 </Layout>
 
-<style>
-  .home-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1.5rem;
-    position: relative;
-  }
+<!-- 引入样式 -->
+<link rel="stylesheet" href="/src/styles/home/index.css">
 
-  @media (min-width: 768px) {
-    .home-container {
-      padding: 2rem;
-    }
-  }
-
-  .home-content {
-    text-align: center;
-  }
-
-  .home-link {
-    display: block;
-  }
-
-  .home-title {
-    margin-bottom: 1rem;
-  }
-
-  .word-block {
-    display: block;
-    font-size: 2.25rem;
-    font-weight: 800;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    line-height: 1.1;
-    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  @media (min-width: 768px) {
-    .word-block {
-      font-size: 3rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .word-block {
-      font-size: 4.5rem;
-    }
-  }
-
-  @media (min-width: 1280px) {
-    .word-block {
-      font-size: 6rem;
-    }
-  }
-
-  .home-link:hover .word-block {
-    transform: translateY(-2px);
-    transition: transform 0.3s ease;
-  }
-
-  .subtitle {
-    color: rgb(156, 163, 175);
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    font-size: 0.875rem;
-    margin-top: 2rem;
-  }
-
-  @media (min-width: 768px) {
-    .subtitle {
-      font-size: 1rem;
-    }
-  }
-
-  .animate-fade-in {
-    animation: fadeIn 1s ease-out forwards;
-    opacity: 0;
-  }
-
-  .explore-container {
-    position: absolute;
-    bottom: 3rem;
-    left: 50%;
-    transform: translateX(-50%);
-  }
-
-  .btn-explore {
-    color: white;
-    font-size: 0.875rem;
-    letter-spacing: 0.4em;
-    text-transform: uppercase;
-    font-weight: 500;
-    transition: all 0.5s ease-in-out;
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: 1rem 2rem;
-  }
-
-  .btn-explore:hover {
-    letter-spacing: 0.6em;
-    opacity: 0.7;
-  }
-
-  @keyframes fadeInUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
-  }
-</style>
-
+<!-- 引入交互脚本 -->
 <script>
-  const exploreBtn = document.getElementById('explore-btn');
+  import { initHomeInteractions } from '../scripts/home/interactions';
   
-  exploreBtn?.addEventListener('click', () => {
-    const menuToggle = document.getElementById('menu-toggle') as HTMLButtonElement;
-    menuToggle?.click();
+  // 初始化交互
+  document.addEventListener('DOMContentLoaded', () => {
+    initHomeInteractions();
   });
 </script>

@@ -15,6 +15,21 @@
   --color-gray-900: #171717;
 }
 
+/* 主题变量 */
+:root {
+  --bg-color: #000000;
+  --text-color: #ffffff;
+  --border-color: rgba(255, 255, 255, 0.3);
+  --overlay-bg: rgba(0, 0, 0, 0.95);
+}
+
+[data-theme="light"] {
+  --bg-color: #ffffff;
+  --text-color: #000000;
+  --border-color: rgba(0, 0, 0, 0.3);
+  --overlay-bg: rgba(255, 255, 255, 0.95);
+}
+
 * {
   margin: 0;
   padding: 0;
@@ -27,12 +42,13 @@ html {
 
 body {
   font-family: var(--font-family-sans);
-  background-color: var(--color-black);
-  color: var(--color-white);
+  background-color: var(--bg-color);
+  color: var(--text-color);
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 ::selection {
@@ -162,4 +178,28 @@ button {
 
 .text-balance {
   text-wrap: balance;
+}
+
+/* DotMatrixText hover scale effect */
+.nav-toggle .nav-toggle-text,
+.menu-close .menu-close-text,
+.menu-link .menu-link-text {
+  transform: scaleX(1);
+  transition: transform 0.3s ease, filter 0.3s ease;
+  transform-origin: center;
+}
+
+.nav-toggle:hover .nav-toggle-text,
+.menu-close:hover .menu-close-text,
+.menu-link:hover .menu-link-text {
+  transform: scaleX(1.15);
+}
+
+.nav-toggle:hover .nav-toggle-text,
+.menu-close:hover .menu-close-text {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+.menu-link:hover .menu-link-text {
+  filter: drop-shadow(0 0 8px currentColor);
 }

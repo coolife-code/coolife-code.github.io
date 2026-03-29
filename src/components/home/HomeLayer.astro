@@ -1,0 +1,44 @@
+---
+import DotMatrixText from '../DotMatrixText.astro';
+import { siteConfig } from '../../data/site';
+
+const { titleWords, subtitle } = siteConfig;
+---
+
+<!-- 首页层 -->
+<div id="home-layer" class="layer home-layer">
+  <div class="home-content">
+    <a href="https://thr33dot.ffm.to/etds" target="_blank" rel="noopener noreferrer" class="home-link">
+      <h1 class="home-title">
+        {titleWords.map((word, wordIndex) => (
+          <span 
+            class="word-block" 
+            style={`animation-delay: ${wordIndex * 0.15}s`}
+          >
+            {word}
+          </span>
+        ))}
+      </h1>
+    </a>
+    
+    <p class="subtitle animate-fade-in" style="animation-delay: 0.8s">
+      {subtitle}
+    </p>
+  </div>
+
+  <!-- 底部 EXPLORE 按钮 -->
+  <div class="bottom-bar">
+    <button 
+      id="explore-btn"
+      class="explore-trigger"
+    >
+      <DotMatrixText 
+        text="EXPLORE" 
+        dotSize={3}
+        dotSpacing={2}
+        charSpacing={4}
+        class="explore-dot-matrix"
+      />
+    </button>
+  </div>
+</div>
