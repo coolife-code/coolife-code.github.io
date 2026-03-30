@@ -4,14 +4,10 @@
 const getElements = () => ({
   homeLayer: document.getElementById('home-layer'),
   depthLayer: document.getElementById('depth-layer'),
-  exploreBtn: document.getElementById('explore-btn'),
-  exploreBtnDepth: document.getElementById('explore-btn-depth'),
-  radialMenu: document.getElementById('radial-menu'),
-  menuClose: document.getElementById('menu-close'),
   depthItems: document.querySelectorAll('.depth-item'),
   depthCounter: document.getElementById('depth-counter'),
   depthContainer: document.querySelector('.depth-container'),
-  exploreNavItem: document.querySelector('.radial-item[data-id="explore"]'),
+  menuNavItem: document.querySelector('.radial-item[data-id="menu"]'),
 });
 
 // 状态管理
@@ -29,31 +25,17 @@ const state: AppState = {
   accumulatedScroll: 0,
 };
 
-// 打开圆盘菜单
-const openRadialMenu = () => {
-  const { radialMenu } = getElements();
-  state.isMenuOpen = true;
-  radialMenu?.classList.add('active');
-  document.body.style.overflow = 'hidden';
-};
-
-// 关闭圆盘菜单
-const closeRadialMenu = () => {
-  const { radialMenu } = getElements();
-  state.isMenuOpen = false;
-  radialMenu?.classList.remove('active');
-  if (!state.isInDepthMode) {
-    document.body.style.overflow = '';
-  }
-};
-
 // 进入深度模式
 const enterDepthMode = () => {
   const { homeLayer, depthLayer, depthContainer } = getElements();
   state.isInDepthMode = true;
   homeLayer?.classList.add('hidden');
   depthLayer?.classList.add('active');
-  closeRadialMenu();
+  
+  // 关闭菜单
+  if (typeof window !== 'undefined' && (window as any).closeRadialMenu) {
+    (window as any).closeRadialMenu();
+  }
   
   setTimeout(() => {
     updateDepthItems();
@@ -107,32 +89,14 @@ const updateDepthItems = () => {
 // 初始化事件监听
 export const initHomeInteractions = () => {
   const { 
-    exploreBtn, 
-    exploreBtnDepth, 
-    menuClose, 
-    radialMenu, 
-    exploreNavItem,
+    menuNavItem,
     depthContainer 
   } = getElements();
 
-  // EXPLORE 按钮点击 - 打开圆盘菜单
-  exploreBtn?.addEventListener('click', openRadialMenu);
-  exploreBtnDepth?.addEventListener('click', openRadialMenu);
-
-  // 关闭菜单
-  menuClose?.addEventListener('click', closeRadialMenu);
-
-  // 点击圆盘菜单中的 EXPLORE
-  exploreNavItem?.addEventListener('click', (e) => {
+  // 点击圆盘菜单中的 MENU - 进入深度模式
+  menuNavItem?.addEventListener('click', (e) => {
     e.preventDefault();
     enterDepthMode();
-  });
-
-  // 点击菜单背景关闭
-  radialMenu?.addEventListener('click', (e) => {
-    if (e.target === radialMenu || (e.target as HTMLElement).classList.contains('menu-overlay')) {
-      closeRadialMenu();
-    }
   });
 
   // 滚轮事件处理
@@ -159,11 +123,22 @@ export const initHomeInteractions = () => {
   // 键盘导航
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      if (state.isMenuOpen) {
-        closeRadialMenu();
-      } else if (state.isInDepthMode) {
+      if (state.isInDepthMode) {
         exitDepthMode();
       }
     }
   });
+  
+  // 监听菜单状态变化
+  const radialMenu = document.getElementById('radial-menu');
+  if (radialMenu) {
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          state.isMenuOpen = radialMenu.classList.contains('active');
+        }
+      });
+    });
+    observer.observe(radialMenu, { attributes: true });
+  }
 };

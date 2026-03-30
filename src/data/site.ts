@@ -1,8 +1,8 @@
 // 站点基本信息
 export const siteConfig = {
-  title: 'Even the Devil Smiles - Personal Page',
-  titleWords: ['EVEN', 'THE', 'DEVIL', 'SMILES'],
-  subtitle: '"EVERYONE KNOWS" FEAT. RZA',
+  title: '- Even the light hesitates - coolife-code',
+  titleWords: ['Even', 'the', 'light', 'hesitates'],
+  subtitle: 'coolife-code',
 };
 
 // 导航菜单项
@@ -13,12 +13,12 @@ export interface NavItem {
 }
 
 export const navItems: NavItem[] = [
-  { id: 'explore', label: '1. EXPLORE', angle: 0 },
-  { id: 'updates', label: '2. UPDATES', angle: 60 },
-  { id: 'songs', label: '3. SONGS', angle: 120 },
-  { id: 'videos', label: '4. VIDEOS', angle: 180 },
-  { id: 'info', label: '5. INFO', angle: 240 },
-  { id: 'shop', label: '6. SHOP', angle: 300 },
+  { id: 'identity', label: '身份', angle: 240 },
+  { id: 'stack', label: '技术栈', angle: 180 },
+  { id: 'experience', label: '经历', angle: 120 },
+  { id: 'social', label: '社交', angle: 60 },
+  { id: 'quotes', label: '语录', angle: 0 },
+  { id: 'guestbook', label: '留言', angle: 300 },
 ];
 
 // 内容项类型

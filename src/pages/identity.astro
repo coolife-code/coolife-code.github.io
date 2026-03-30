@@ -1,0 +1,247 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RadialMenu from '../components/home/RadialMenu.astro';
+import PageNav from '../components/PageNav.astro';
+---
+
+<Layout title="Identity - Personal Page" currentPage="/identity">
+  <!-- 圆盘导航菜单 -->
+  <RadialMenu />
+  
+  <!-- 页面底部导航 -->
+  <PageNav />
+  
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">IDENTITY</span>
+        </h1>
+        <p class="page-subtitle">
+          WHO I AM
+        </p>
+      </header>
+
+      <div class="identity-content">
+        <div class="identity-card" style="animation-delay: 0.2s">
+          <div class="avatar-section">
+            <div class="avatar-placeholder">
+              <span>COOLIFE</span>
+            </div>
+          </div>
+          
+          <div class="info-section">
+            <div class="info-item" style="animation-delay: 0.3s">
+              <span class="info-label">NAME</span>
+              <span class="info-value">coolife-code</span>
+            </div>
+            <div class="info-item" style="animation-delay: 0.4s">
+              <span class="info-label">ROLE</span>
+              <span class="info-value">Developer & Creator</span>
+            </div>
+            <div class="info-item" style="animation-delay: 0.5s">
+              <span class="info-label">LOCATION</span>
+              <span class="info-value">Earth</span>
+            </div>
+            <div class="info-item" style="animation-delay: 0.6s">
+              <span class="info-label">STATUS</span>
+              <span class="info-value status-active">Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="bio-section" style="animation-delay: 0.7s">
+          <p class="bio-text">
+            A passionate developer exploring the intersection of technology and creativity. 
+            I believe in building things that matter and sharing knowledge along the way.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .page-subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .identity-content {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .identity-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem;
+    border: 1px solid rgb(31, 41, 55);
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .identity-card {
+      flex-direction: row;
+      padding: 3rem;
+      gap: 3rem;
+    }
+  }
+
+  .avatar-section {
+    flex-shrink: 0;
+  }
+
+  .avatar-placeholder {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, rgb(31, 41, 55), rgb(55, 65, 81));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    font-weight: 600;
+  }
+
+  @media (min-width: 768px) {
+    .avatar-placeholder {
+      width: 150px;
+      height: 150px;
+      font-size: 1rem;
+    }
+  }
+
+  .info-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.75rem 0;
+    border-bottom: 1px solid rgb(31, 41, 55);
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .info-label {
+    color: rgb(107, 114, 128);
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+
+  .info-value {
+    font-size: 0.875rem;
+    letter-spacing: 0.05em;
+    font-weight: 500;
+  }
+
+  .status-active {
+    color: rgb(34, 197, 94);
+  }
+
+  .bio-section {
+    text-align: center;
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .bio-text {
+    color: rgb(156, 163, 175);
+    font-size: 1rem;
+    line-height: 2;
+    max-width: 36rem;
+    margin: 0 auto;
+  }
+
+  @media (min-width: 768px) {
+    .bio-text {
+      font-size: 1.125rem;
+    }
+  }
+</style>

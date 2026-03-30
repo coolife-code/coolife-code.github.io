@@ -1,6 +1,7 @@
 /* 点阵字体 */
 :root {
   --pixel-font: 'Tiny5', monospace;
+  --chinese-font: 'ZCOOL QingKe HuangYou', 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
 }
 
 /* 层的基础样式 */
@@ -231,10 +232,10 @@
   text-decoration: none;
   font-size: 0.875rem;
   letter-spacing: 0.15em;
-  text-transform: uppercase;
   transition: all 0.3s ease;
-  font-family: var(--pixel-font);
+  font-family: var(--chinese-font);
   white-space: nowrap;
+  font-weight: 500;
 }
 
 .radial-item:hover {
@@ -242,11 +243,11 @@
   transform: rotate(var(--angle)) translateX(100px) rotate(calc(var(--angle) * -1)) scale(1.1);
 }
 
-.radial-item[data-id="explore"] {
+.radial-item[data-id="menu"] {
   color: var(--text-color);
 }
 
-.radial-item[data-id="explore"]::before {
+.radial-item[data-id="menu"]::before {
   content: '● ';
   color: var(--text-color);
 }

@@ -1,0 +1,20 @@
+---
+import DotMatrixText from './DotMatrixText.astro';
+---
+
+<!-- 页面底部导航按钮 - 与首页样式完全一致 -->
+<div class="bottom-bar">
+  <button 
+    id="page-menu-btn"
+    class="explore-trigger"
+    aria-label="打开导航菜单"
+  >
+    <DotMatrixText 
+      text="MENU" 
+      dotSize={3}
+      dotSpacing={2}
+      charSpacing={4}
+      class="explore-dot-matrix"
+    />
+  </button>
+</div>

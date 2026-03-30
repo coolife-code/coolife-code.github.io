@@ -1,0 +1,275 @@
+---
+import { navItems } from '../data/site';
+
+export interface Props {
+  currentPage?: string;
+}
+
+const { currentPage = '' } = Astro.props;
+---
+
+<!-- 圆盘导航组件 - 用于子页面 -->
+<div class="radial-nav-wrapper">
+  <!-- 触发按钮 -->
+  <button class="radial-nav-trigger" id="radial-nav-trigger" aria-label="打开导航菜单">
+    <span class="trigger-line"></span>
+    <span class="trigger-line"></span>
+    <span class="trigger-line"></span>
+  </button>
+
+  <!-- 圆盘菜单 -->
+  <div class="radial-nav-overlay" id="radial-nav-overlay">
+    <div class="radial-nav-container">
+      <div class="radial-nav-header">
+        <span class="nav-title">MENU</span>
+        <button class="nav-close" id="nav-close" aria-label="关闭菜单">×</button>
+      </div>
+      
+      <div class="radial-nav-menu">
+        {navItems.map((item, index) => (
+          <a
+            href={`/${item.id}`}
+            class={`radial-nav-item ${currentPage === `/${item.id}` ? 'active' : ''}`}
+            data-id={item.id}
+            data-index={index}
+            style={`--angle: ${item.angle}deg; --index: ${index};`}
+          >
+            <span class="nav-label">{item.label}</span>
+          </a>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .radial-nav-wrapper {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    z-index: 9999;
+  }
+
+  /* 触发按钮 - 汉堡菜单样式 */
+  .radial-nav-trigger {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--bg-color, #0a0a0a);
+    border: 1px solid var(--border-color, #333);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 10000;
+  }
+
+  .radial-nav-trigger:hover {
+    background: var(--text-color, #fff);
+    border-color: var(--text-color, #fff);
+  }
+
+  .radial-nav-trigger:hover .trigger-line {
+    background: var(--bg-color, #0a0a0a);
+  }
+
+  .trigger-line {
+    width: 20px;
+    height: 2px;
+    background: var(--text-color, #fff);
+    transition: all 0.3s ease;
+    border-radius: 1px;
+  }
+
+  /* 菜单遮罩 */
+  .radial-nav-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+    z-index: 9998;
+  }
+
+  .radial-nav-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* 菜单容器 */
+  .radial-nav-container {
+    width: 80%;
+    max-width: 360px;
+    height: 80%;
+    max-height: 480px;
+    border: 1px solid var(--border-color, #333);
+    background: var(--bg-color, #0a0a0a);
+    display: flex;
+    flex-direction: column;
+    transform: scale(0.9);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .radial-nav-overlay.active .radial-nav-container {
+    transform: scale(1);
+  }
+
+  /* 菜单头部 */
+  .radial-nav-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color, #333);
+  }
+
+  .nav-title {
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    color: var(--text-color, #fff);
+    text-transform: uppercase;
+    font-family: var(--pixel-font, monospace);
+  }
+
+  .nav-close {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    color: var(--text-color, #fff);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--pixel-font, monospace);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .nav-close:hover {
+    opacity: 0.7;
+  }
+
+  /* 圆盘导航区域 */
+  .radial-nav-menu {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /* 导航项 */
+  .radial-nav-item {
+    position: absolute;
+    color: var(--text-color, #fff);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: var(--chinese-font, 'Noto Sans SC', sans-serif);
+    white-space: nowrap;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid transparent;
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(30px) rotate(calc(var(--angle) * -1)) scale(0.5);
+  }
+
+  .radial-nav-overlay.active .radial-nav-item {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateX(100px) rotate(calc(var(--angle) * -1)) scale(1);
+  }
+
+  /* 依次展开的动画延迟 */
+  .radial-nav-overlay.active .radial-nav-item[data-index="0"] { transition-delay: 0.05s; }
+  .radial-nav-overlay.active .radial-nav-item[data-index="1"] { transition-delay: 0.1s; }
+  .radial-nav-overlay.active .radial-nav-item[data-index="2"] { transition-delay: 0.15s; }
+  .radial-nav-overlay.active .radial-nav-item[data-index="3"] { transition-delay: 0.2s; }
+  .radial-nav-overlay.active .radial-nav-item[data-index="4"] { transition-delay: 0.25s; }
+  .radial-nav-overlay.active .radial-nav-item[data-index="5"] { transition-delay: 0.3s; }
+
+  .radial-nav-item:hover,
+  .radial-nav-item.active {
+    border-color: var(--border-color, #333);
+    background: rgba(255, 255, 255, 0.05);
+  }
+
+  .nav-label {
+    font-family: var(--chinese-font, 'Noto Sans SC', sans-serif);
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    function initRadialNav() {
+      const trigger = document.getElementById('radial-nav-trigger');
+      const overlay = document.getElementById('radial-nav-overlay');
+      const closeBtn = document.getElementById('nav-close');
+      let isOpen = false;
+
+      function openMenu() {
+        isOpen = true;
+        overlay?.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        // 汉堡菜单变X
+        if (trigger) {
+          trigger.classList.add('active');
+        }
+      }
+
+      function closeMenu() {
+        isOpen = false;
+        overlay?.classList.remove('active');
+        document.body.style.overflow = '';
+        if (trigger) {
+          trigger.classList.remove('active');
+        }
+      }
+
+      // 点击触发按钮
+      trigger?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        if (isOpen) {
+          closeMenu();
+        } else {
+          openMenu();
+        }
+      });
+
+      // 点击关闭按钮
+      closeBtn?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeMenu();
+      });
+
+      // 点击遮罩关闭
+      overlay?.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          closeMenu();
+        }
+      });
+
+      // ESC键关闭
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && isOpen) {
+          closeMenu();
+        }
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRadialNav);
+    } else {
+      initRadialNav();
+    }
+  })();
+</script>

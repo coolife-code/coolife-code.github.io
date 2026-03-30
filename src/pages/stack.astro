@@ -1,0 +1,221 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RadialMenu from '../components/home/RadialMenu.astro';
+import PageNav from '../components/PageNav.astro';
+
+const categories = [
+  {
+    name: 'Frontend',
+    skills: ['React', 'Vue', 'TypeScript', 'Next.js', 'Astro', 'Tailwind CSS'],
+  },
+  {
+    name: 'Backend',
+    skills: ['Node.js', 'Python', 'Go', 'PostgreSQL', 'Redis', 'Docker'],
+  },
+  {
+    name: 'Tools',
+    skills: ['Git', 'VS Code', 'Figma', 'Linux', 'Vim', 'Cursor'],
+  },
+];
+---
+
+<Layout title="Stack - Personal Page" currentPage="/stack">
+  <!-- 圆盘导航菜单 -->
+  <RadialMenu />
+  
+  <!-- 页面底部导航 -->
+  <PageNav />
+  
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">STACK</span>
+        </h1>
+        <p class="page-subtitle">
+          TOOLS & TECHNOLOGIES
+        </p>
+      </header>
+
+      <div class="stack-grid">
+        {categories.map((category, catIndex) => (
+          <div 
+            class="stack-category" 
+            style={`animation-delay: ${(catIndex + 1) * 0.15}s`}
+          >
+            <h2 class="category-title">{category.name}</h2>
+            <div class="skills-list">
+              {category.skills.map((skill, skillIndex) => (
+                <span 
+                  class="skill-tag"
+                  style={`animation-delay: ${(catIndex + 1) * 0.15 + (skillIndex + 1) * 0.05}s`}
+                >
+                  {skill}
+                </span>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 72rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .page-subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .stack-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .stack-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .stack-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .stack-category {
+    padding: 1.5rem;
+    border: 1px solid rgb(31, 41, 55);
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .stack-category {
+      padding: 2rem;
+    }
+  }
+
+  .category-title {
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgb(31, 41, 55);
+  }
+
+  @media (min-width: 768px) {
+    .category-title {
+      font-size: 1.125rem;
+      margin-bottom: 2rem;
+    }
+  }
+
+  .skills-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .skill-tag {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    border: 1px solid rgb(55, 65, 81);
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+    opacity: 0;
+    animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .skill-tag {
+      font-size: 0.875rem;
+      padding: 0.625rem 1.25rem;
+    }
+  }
+
+  .skill-tag:hover {
+    background: rgb(31, 41, 55);
+    border-color: rgb(75, 85, 99);
+  }
+</style>

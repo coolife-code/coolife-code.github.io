@@ -1,0 +1,179 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RadialMenu from '../components/home/RadialMenu.astro';
+import PageNav from '../components/PageNav.astro';
+---
+
+<Layout title="Guestbook - Personal Page" currentPage="/guestbook">
+  <!-- 圆盘导航菜单 -->
+  <RadialMenu />
+  
+  <!-- 页面底部导航 -->
+  <PageNav />
+  
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">GUEST</span>
+        </h1>
+        <p class="page-subtitle">
+          LEAVE A MESSAGE
+        </p>
+      </header>
+
+      <div class="guestbook-content" style="animation-delay: 0.2s">
+        <p class="guestbook-intro">
+          Welcome to my guestbook! Feel free to leave a message, share your thoughts, or just say hello.
+        </p>
+        
+        <div class="utterances-container">
+          <script 
+            src="https://utteranc.es/client.js"
+            repo="coolife-code/personal-page"
+            issue-term="pathname"
+            theme="dark"
+            crossorigin="anonymous"
+            async
+          ></script>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .page-subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .guestbook-content {
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  .guestbook-intro {
+    text-align: center;
+    color: rgb(156, 163, 175);
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .guestbook-intro {
+      font-size: 1.125rem;
+      margin-bottom: 4rem;
+    }
+  }
+
+  .utterances-container {
+    min-height: 300px;
+  }
+
+  :global(.utterances) {
+    max-width: 100% !important;
+  }
+
+  :global(.utterances-frame) {
+    width: 100% !important;
+  }
+</style>
+
+<script>
+  // 监听主题变化，同步更新 utterances 主题
+  const observer = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => {
+      if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
+        const theme = document.documentElement.getAttribute('data-theme');
+        const utterancesFrame = document.querySelector('.utterances-frame') as HTMLIFrameElement;
+        if (utterancesFrame) {
+          const message = {
+            type: 'set-theme',
+            theme: theme === 'light' ? 'github-light' : 'dark'
+          };
+          utterancesFrame.contentWindow?.postMessage(message, 'https://utteranc.es');
+        }
+      }
+    });
+  });
+
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ['data-theme']
+  });
+</script>

@@ -14,12 +14,13 @@ import { navItems } from '../../data/site';
 
       <!-- 圆盘导航 -->
       <div class="radial-nav">
-        {navItems.map((item) => (
+        {navItems.map((item, index) => (
           <a
-            href={item.id === 'explore' ? '#' : `/${item.id}`}
+            href={`/${item.id}`}
             class="radial-item"
             data-id={item.id}
-            style={`--angle: ${item.angle}deg;`}
+            data-index={index}
+            style={`--angle: ${item.angle}deg; --index: ${index};`}
           >
             <span class="radial-label">{item.label}</span>
           </a>
@@ -31,36 +32,200 @@ import { navItems } from '../../data/site';
   </div>
 </div>
 
-<script>
-  // 径向菜单关闭功能
-  document.addEventListener('DOMContentLoaded', () => {
-    const radialMenu = document.getElementById('radial-menu');
-    const menuClose = document.getElementById('radial-menu-close');
-    const menuOverlayBg = document.getElementById('menu-overlay-bg');
+<style>
+  /* 圆盘导航菜单 */
+  .radial-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
 
-    function closeRadialMenu() {
-      radialMenu?.classList.remove('active');
-      document.body.style.overflow = '';
+  .radial-menu.active {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .menu-overlay {
+    width: 100%;
+    height: 100%;
+    background: var(--overlay-bg, rgba(0, 0, 0, 0.9));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .menu-container {
+    width: 80%;
+    max-width: 360px;
+    height: 80%;
+    max-height: 480px;
+    border: 1px solid var(--border-color, #333);
+    background: var(--bg-color, #0a0a0a);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* 菜单头部 */
+  .menu-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border-color, #333);
+  }
+
+  .menu-title {
+    font-size: 0.875rem;
+    letter-spacing: 0.2em;
+    color: var(--text-color, #fff);
+    text-transform: uppercase;
+    font-family: var(--pixel-font, monospace);
+  }
+
+  .menu-close {
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    color: var(--text-color, #fff);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-family: var(--pixel-font, monospace);
+  }
+
+  .menu-close:hover {
+    opacity: 0.7;
+  }
+
+  /* 圆盘导航 */
+  .radial-nav {
+    flex: 1;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .radial-item {
+    position: absolute;
+    color: var(--text-color, #fff);
+    text-decoration: none;
+    font-size: 0.875rem;
+    letter-spacing: 0.15em;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    font-family: var(--chinese-font, 'Noto Sans SC', sans-serif);
+    white-space: nowrap;
+    font-weight: 500;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid transparent;
+    opacity: 0;
+    transform: rotate(var(--angle)) translateX(40px) rotate(calc(var(--angle) * -1)) scale(0.5);
+  }
+
+  .radial-menu.active .radial-item {
+    opacity: 1;
+    transform: rotate(var(--angle)) translateX(100px) rotate(calc(var(--angle) * -1)) scale(1);
+  }
+
+  /* 依次展开的动画延迟 */
+  .radial-menu.active .radial-item[data-index="0"] { transition-delay: 0.05s; }
+  .radial-menu.active .radial-item[data-index="1"] { transition-delay: 0.1s; }
+  .radial-menu.active .radial-item[data-index="2"] { transition-delay: 0.15s; }
+  .radial-menu.active .radial-item[data-index="3"] { transition-delay: 0.2s; }
+  .radial-menu.active .radial-item[data-index="4"] { transition-delay: 0.25s; }
+  .radial-menu.active .radial-item[data-index="5"] { transition-delay: 0.3s; }
+
+  .radial-item:hover {
+    border-color: var(--border-color, #333);
+    background: var(--bg-color, #0a0a0a);
+  }
+
+  .radial-item[data-id="menu"] {
+    color: var(--text-color, #fff);
+  }
+
+  .radial-item[data-id="menu"]::before {
+    content: '● ';
+    color: var(--text-color, #fff);
+  }
+</style>
+
+<script is:inline>
+  (function() {
+    function initRadialMenu() {
+      const radialMenu = document.getElementById('radial-menu');
+      const menuClose = document.getElementById('radial-menu-close');
+      const menuOverlayBg = document.getElementById('menu-overlay-bg');
+      
+      // 支持多个触发按钮：首页的 explore-btn 和子页面的 page-menu-btn
+      const exploreBtn = document.getElementById('explore-btn');
+      const exploreBtnDepth = document.getElementById('explore-btn-depth');
+      const pageMenuBtn = document.getElementById('page-menu-btn');
+
+      function openRadialMenu() {
+        if (radialMenu) {
+          radialMenu.classList.add('active');
+          document.body.style.overflow = 'hidden';
+        }
+      }
+
+      function closeRadialMenu() {
+        if (radialMenu) {
+          radialMenu.classList.remove('active');
+          document.body.style.overflow = '';
+        }
+      }
+
+      // 暴露全局函数供其他脚本调用
+      window.openRadialMenu = openRadialMenu;
+      window.closeRadialMenu = closeRadialMenu;
+
+      // 绑定所有触发按钮
+      exploreBtn?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openRadialMenu();
+      });
+      
+      exploreBtnDepth?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openRadialMenu();
+      });
+      
+      pageMenuBtn?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        openRadialMenu();
+      });
+
+      // 关闭按钮点击事件
+      menuClose?.addEventListener('click', function(e) {
+        e.stopPropagation();
+        closeRadialMenu();
+      });
+
+      // 点击背景关闭
+      menuOverlayBg?.addEventListener('click', function(e) {
+        if (e.target === menuOverlayBg) {
+          closeRadialMenu();
+        }
+      });
+
+      // ESC键关闭
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && radialMenu?.classList.contains('active')) {
+          closeRadialMenu();
+        }
+      });
     }
 
-    // 关闭按钮点击事件
-    menuClose?.addEventListener('click', (e) => {
-      e.stopPropagation();
-      closeRadialMenu();
-    });
-
-    // 点击背景关闭
-    menuOverlayBg?.addEventListener('click', (e) => {
-      if (e.target === menuOverlayBg) {
-        closeRadialMenu();
-      }
-    });
-
-    // ESC键关闭
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape' && radialMenu?.classList.contains('active')) {
-        closeRadialMenu();
-      }
-    });
-  });
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initRadialMenu);
+    } else {
+      initRadialMenu();
+    }
+  })();
 </script>

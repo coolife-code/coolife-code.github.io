@@ -1,0 +1,212 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RadialMenu from '../components/home/RadialMenu.astro';
+import PageNav from '../components/PageNav.astro';
+
+const quotes = [
+  {
+    text: 'Even the light hesitates before the darkness.',
+    source: 'Personal',
+  },
+  {
+    text: 'The only way to do great work is to love what you do.',
+    source: 'Steve Jobs',
+  },
+  {
+    text: 'Simplicity is the ultimate sophistication.',
+    source: 'Leonardo da Vinci',
+  },
+  {
+    text: 'Code is like humor. When you have to explain it, it\'s bad.',
+    source: 'Cory House',
+  },
+  {
+    text: 'First, solve the problem. Then, write the code.',
+    source: 'John Johnson',
+  },
+];
+---
+
+<Layout title="Quotes - Personal Page" currentPage="/quotes">
+  <!-- 圆盘导航菜单 -->
+  <RadialMenu />
+  
+  <!-- 页面底部导航 -->
+  <PageNav />
+  
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">QUOTES</span>
+        </h1>
+        <p class="page-subtitle">
+          WORDS THAT INSPIRE
+        </p>
+      </header>
+
+      <div class="quotes-list">
+        {quotes.map((quote, index) => (
+          <div 
+            class="quote-card"
+            style={`animation-delay: ${(index + 1) * 0.1}s`}
+          >
+            <blockquote class="quote-text">
+              "{quote.text}"
+            </blockquote>
+            <cite class="quote-source">— {quote.source}</cite>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .page-subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .quotes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .quotes-list {
+      gap: 2.5rem;
+    }
+  }
+
+  .quote-card {
+    padding: 1.5rem;
+    border-left: 2px solid rgb(31, 41, 55);
+    transition: all 0.5s ease-in-out;
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .quote-card {
+      padding: 2rem;
+      padding-left: 2.5rem;
+    }
+  }
+
+  .quote-card:hover {
+    border-left-color: rgb(75, 85, 99);
+    padding-left: 2rem;
+  }
+
+  @media (min-width: 768px) {
+    .quote-card:hover {
+      padding-left: 3rem;
+    }
+  }
+
+  .quote-text {
+    font-size: 1.125rem;
+    font-style: italic;
+    line-height: 1.8;
+    color: rgb(209, 213, 219);
+    margin: 0;
+  }
+
+  @media (min-width: 768px) {
+    .quote-text {
+      font-size: 1.375rem;
+    }
+  }
+
+  .quote-source {
+    display: block;
+    margin-top: 1rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgb(107, 114, 128);
+    font-style: normal;
+  }
+
+  @media (min-width: 768px) {
+    .quote-source {
+      font-size: 0.875rem;
+      margin-top: 1.5rem;
+    }
+  }
+</style>

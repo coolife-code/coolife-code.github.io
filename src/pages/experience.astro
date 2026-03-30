@@ -1,0 +1,312 @@
+---
+import Layout from '../layouts/Layout.astro';
+import RadialMenu from '../components/home/RadialMenu.astro';
+import PageNav from '../components/PageNav.astro';
+
+const experiences = [
+  {
+    period: '2023 - Present',
+    title: 'Full Stack Developer',
+    company: 'Independent',
+    description: 'Building personal projects and exploring new technologies.',
+  },
+  {
+    period: '2021 - 2023',
+    title: 'Software Engineer',
+    company: 'Tech Company',
+    description: 'Developed web applications and contributed to open source.',
+  },
+  {
+    period: '2019 - 2021',
+    title: 'Junior Developer',
+    company: 'Startup',
+    description: 'Started my journey in software development.',
+  },
+];
+
+const education = [
+  {
+    period: '2015 - 2019',
+    degree: 'Bachelor\'s Degree',
+    school: 'University',
+    field: 'Computer Science',
+  },
+];
+---
+
+<Layout title="Experience - Personal Page" currentPage="/experience">
+  <!-- 圆盘导航菜单 -->
+  <RadialMenu />
+  
+  <!-- 页面底部导航 -->
+  <PageNav />
+  
+  <div class="page-container">
+    <div class="page-content">
+      <header class="page-header">
+        <h1 class="page-title">
+          <span class="title-word" style="animation-delay: 0s">EXP</span>
+        </h1>
+        <p class="page-subtitle">
+          JOURNEY & MILESTONES
+        </p>
+      </header>
+
+      <div class="timeline">
+        <div class="timeline-section">
+          <h2 class="section-title" style="animation-delay: 0.2s">WORK</h2>
+          <div class="timeline-items">
+            {experiences.map((exp, index) => (
+              <div 
+                class="timeline-item"
+                style={`animation-delay: ${(index + 2) * 0.1}s`}
+              >
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <span class="timeline-period">{exp.period}</span>
+                  <h3 class="timeline-title">{exp.title}</h3>
+                  <span class="timeline-company">{exp.company}</span>
+                  <p class="timeline-description">{exp.description}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div class="timeline-section">
+          <h2 class="section-title" style="animation-delay: 0.5s">EDUCATION</h2>
+          <div class="timeline-items">
+            {education.map((edu, index) => (
+              <div 
+                class="timeline-item"
+                style={`animation-delay: ${(index + 6) * 0.1}s`}
+              >
+                <div class="timeline-marker"></div>
+                <div class="timeline-content">
+                  <span class="timeline-period">{edu.period}</span>
+                  <h3 class="timeline-title">{edu.degree}</h3>
+                  <span class="timeline-company">{edu.school}</span>
+                  <p class="timeline-description">{edu.field}</p>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>
+
+<style>
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .page-container {
+    min-height: 100vh;
+    padding-top: 8rem;
+    padding-bottom: 6rem;
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-container {
+      padding-top: 10rem;
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+  }
+
+  .page-content {
+    max-width: 48rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 5rem;
+  }
+
+  .page-title {
+    margin-bottom: 1.5rem;
+  }
+
+  .title-word {
+    display: block;
+    font-size: 2.25rem;
+    font-weight: 800;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    opacity: 0;
+  }
+
+  @media (min-width: 768px) {
+    .title-word {
+      font-size: 3rem;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .title-word {
+      font-size: 4.5rem;
+    }
+  }
+
+  .page-subtitle {
+    color: rgb(156, 163, 175);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+  }
+
+  @media (min-width: 768px) {
+    .page-subtitle {
+      font-size: 1rem;
+    }
+  }
+
+  .timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+  }
+
+  .timeline-section {
+    position: relative;
+  }
+
+  .section-title {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 2rem;
+    color: rgb(107, 114, 128);
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .section-title {
+      font-size: 1rem;
+      margin-bottom: 2.5rem;
+    }
+  }
+
+  .timeline-items {
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 1px solid rgb(31, 41, 55);
+  }
+
+  @media (min-width: 768px) {
+    .timeline-items {
+      padding-left: 2rem;
+    }
+  }
+
+  .timeline-item {
+    position: relative;
+    padding-bottom: 2.5rem;
+    opacity: 0;
+    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-item {
+      padding-bottom: 3rem;
+    }
+  }
+
+  .timeline-item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline-marker {
+    position: absolute;
+    left: -1.5rem;
+    top: 0.5rem;
+    width: 9px;
+    height: 9px;
+    background: white;
+    border-radius: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media (min-width: 768px) {
+    .timeline-marker {
+      left: -2rem;
+      width: 11px;
+      height: 11px;
+    }
+  }
+
+  .timeline-content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .timeline-period {
+    font-size: 0.75rem;
+    letter-spacing: 0.15em;
+    color: rgb(75, 85, 99);
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-period {
+      font-size: 0.875rem;
+    }
+  }
+
+  .timeline-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-title {
+      font-size: 1.375rem;
+    }
+  }
+
+  .timeline-company {
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    color: rgb(156, 163, 175);
+    text-transform: uppercase;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-company {
+      font-size: 1rem;
+    }
+  }
+
+  .timeline-description {
+    font-size: 0.875rem;
+    color: rgb(107, 114, 128);
+    line-height: 1.6;
+    margin-top: 0.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .timeline-description {
+      font-size: 1rem;
+    }
+  }
+</style>
