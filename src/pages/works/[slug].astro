@@ -1,34 +1,12 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import { works } from '../../data/site';
+import CsustdateShowcase from '../../components/works/CsustdateShowcase.astro';
+import ReacordShowcase from '../../components/works/ReacordShowcase.astro';
+import AletheiaShowcase from '../../components/works/AletheiaShowcase.astro';
+import IfnoaiShowcase from '../../components/works/IfnoaiShowcase.astro';
 
 export async function getStaticPaths() {
-  const works = [
-    {
-      slug: 'project-one',
-      title: 'PROJECT ONE',
-      description: 'A web application built with modern technologies',
-      year: '2024',
-      tags: ['Web', 'React', 'TypeScript', 'Tailwind CSS'],
-      image: '/images/work1.jpg',
-    },
-    {
-      slug: 'project-two',
-      title: 'PROJECT TWO',
-      description: 'Mobile app for productivity enthusiasts',
-      year: '2024',
-      tags: ['Mobile', 'Flutter', 'Dart', 'Firebase'],
-      image: '/images/work2.jpg',
-    },
-    {
-      slug: 'project-three',
-      title: 'PROJECT THREE',
-      description: 'Data visualization dashboard',
-      year: '2023',
-      tags: ['Data', 'D3.js', 'Python', 'Flask'],
-      image: '/images/work3.jpg',
-    },
-  ];
-
   return works.map((work) => ({
     params: { slug: work.slug },
     props: { work },
@@ -36,221 +14,16 @@ export async function getStaticPaths() {
 }
 
 const { work } = Astro.props;
+const componentMap = {
+  csustdate: CsustdateShowcase,
+  reacord: ReacordShowcase,
+  'aleth-eia': AletheiaShowcase,
+  ifnoai: IfnoaiShowcase,
+} as const;
+
+const WorkComponent = componentMap[work.slug as keyof typeof componentMap];
 ---
 
 <Layout title={`${work.title} - Even The Devil Smiles`} currentPage="/works">
-  <div class="detail-container">
-    <!-- 返回按钮 -->
-    <a href="/" class="back-btn">
-      <span class="back-arrow">←</span>
-      <span class="back-text">BACK</span>
-    </a>
-
-    <!-- 主图展示 -->
-    <div class="hero-section">
-      <div class="image-frame">
-        <div class="image-placeholder">
-          <span class="placeholder-text">{work.title}</span>
-        </div>
-      </div>
-    </div>
-
-    <!-- 信息区 -->
-    <div class="info-section">
-      <h1 class="detail-title">{work.title}</h1>
-      <p class="detail-year">{work.year}</p>
-      <p class="detail-description">{work.description}</p>
-      
-      <div class="tags-list">
-        {work.tags.map((tag: string) => (
-          <span class="tag">{tag}</span>
-        ))}
-      </div>
-    </div>
-
-    <!-- 底部导航 -->
-    <div class="nav-dots">
-      <a href="/" class="nav-dot" title="Back to Explore"></a>
-    </div>
-  </div>
+  {WorkComponent ? <WorkComponent work={work} /> : null}
 </Layout>
-
-<style>
-  .detail-container {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 6rem 2rem 4rem;
-    position: relative;
-  }
-
-  /* 返回按钮 */
-  .back-btn {
-    position: fixed;
-    top: 2rem;
-    left: 2rem;
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    color: white;
-    text-decoration: none;
-    z-index: 50;
-    transition: all 0.3s ease;
-  }
-
-  .back-btn:hover {
-    opacity: 0.7;
-  }
-
-  .back-arrow {
-    font-size: 1.25rem;
-  }
-
-  .back-text {
-    font-size: 0.75rem;
-    letter-spacing: 0.3em;
-  }
-
-  /* 主图区 */
-  .hero-section {
-    flex: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 800px;
-  }
-
-  .image-frame {
-    width: 100%;
-    max-width: 500px;
-    aspect-ratio: 4/5;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    padding: 1.5rem;
-    transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-  }
-
-  @media (min-width: 768px) {
-    .image-frame {
-      padding: 2rem;
-    }
-  }
-
-  .image-frame:hover {
-    transform: scale(1.02);
-    box-shadow: 0 0 80px rgba(255, 255, 255, 0.08);
-  }
-
-  .image-placeholder {
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .image-placeholder::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: 
-      linear-gradient(90deg, transparent 50%, rgba(255,255,255,0.03) 50%),
-      linear-gradient(transparent 50%, rgba(255,255,255,0.03) 50%);
-    background-size: 20px 20px;
-    opacity: 0.5;
-  }
-
-  .placeholder-text {
-    font-size: 1.25rem;
-    letter-spacing: 0.2em;
-    color: white;
-    text-transform: uppercase;
-    z-index: 1;
-  }
-
-  @media (min-width: 768px) {
-    .placeholder-text {
-      font-size: 1.5rem;
-    }
-  }
-
-  /* 信息区 */
-  .info-section {
-    text-align: center;
-    margin-top: 3rem;
-    max-width: 500px;
-  }
-
-  .detail-title {
-    font-size: 1.5rem;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    margin-bottom: 0.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .detail-title {
-      font-size: 2rem;
-    }
-  }
-
-  .detail-year {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.5);
-    letter-spacing: 0.2em;
-    margin-bottom: 1rem;
-  }
-
-  .detail-description {
-    font-size: 0.875rem;
-    color: rgba(255, 255, 255, 0.7);
-    line-height: 1.6;
-    margin-bottom: 1.5rem;
-  }
-
-  .tags-list {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 0.75rem;
-  }
-
-  .tag {
-    font-size: 0.65rem;
-    letter-spacing: 0.2em;
-    color: rgba(255, 255, 255, 0.5);
-    text-transform: uppercase;
-    padding: 0.5rem 1rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-  }
-
-  /* 底部导航点 */
-  .nav-dots {
-    position: fixed;
-    bottom: 2rem;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    gap: 1rem;
-    z-index: 50;
-  }
-
-  .nav-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: rgba(255, 255, 255, 0.3);
-    transition: all 0.3s ease;
-  }
-
-  .nav-dot:hover {
-    background: rgba(255, 255, 255, 0.8);
-    transform: scale(1.3);
-  }
-</style>

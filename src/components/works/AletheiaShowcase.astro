@@ -1,0 +1,318 @@
+---
+import type { WorkItem } from '../../data/site';
+
+interface Props {
+  work: WorkItem;
+}
+
+const { work } = Astro.props;
+---
+
+<section class="aletheia-page">
+  <a href="/works" class="back-link">返回作品集</a>
+
+  <header class="hero">
+    <p class="eyebrow">{work.subtitle}</p>
+    <h1>{work.title}</h1>
+    <p class="intro">{work.detail}</p>
+    <div class="hero-actions">
+      <a href="https://www.modelscope.cn/studios/coolife/aletheia2.0" target="_blank" rel="noreferrer" class="hero-link primary">立即体验</a>
+      <a href={work.repoUrl} target="_blank" rel="noreferrer" class="hero-link secondary">查看仓库</a>
+    </div>
+  </header>
+
+  <section class="pipeline">
+    <div class="node">输入问题</div>
+    <div class="arrow">→</div>
+    <div class="node">Direction</div>
+    <div class="arrow">→</div>
+    <div class="node wide">多角度 Agent 并行分析</div>
+    <div class="arrow">→</div>
+    <div class="node">Inspector</div>
+    <div class="arrow">→</div>
+    <div class="node">Judgment</div>
+  </section>
+
+  <section class="grid">
+    <article class="panel neon">
+      <h2>为什么它特别</h2>
+      <p>这个项目不只是在做一个聊天界面，而是在尝试把“调查过程”结构化：先定方向，再多角度并发分析，再检查漏洞，最后综合研判。</p>
+    </article>
+
+    <article class="panel">
+      <h2>能力设计</h2>
+      <ul>
+        <li>事实核查、时间线、利益相关者等多个角度并行工作。</li>
+        <li>支持联网搜索与来源追溯，减少只靠模型直觉输出的风险。</li>
+        <li>支持流式分析过程展示，强调可观察性与过程透明。</li>
+      </ul>
+    </article>
+
+    <article class="panel">
+      <h2>技术栈</h2>
+      <p>后端使用 Python + FastAPI 组织 Agent 协作与接口输出，前端使用 React + TypeScript 承担交互与结果呈现。</p>
+      <div class="chips">
+        {work.tags.map((tag) => <span>{tag}</span>)}
+      </div>
+    </article>
+
+    <article class="panel">
+      <h2>想表达的能力</h2>
+      <p>它体现的是系统设计能力: 把复杂问题拆成多个职责单元，再通过流程控制、数据回流与验证机制，把“大模型能力”组织成一个更可控的产品。</p>
+      <div class="panel-actions">
+        <a href="https://www.modelscope.cn/studios/coolife/aletheia2.0" target="_blank" rel="noreferrer">体验入口</a>
+        <a href={work.repoUrl} target="_blank" rel="noreferrer">仓库代码</a>
+      </div>
+    </article>
+  </section>
+</section>
+
+<style>
+  .aletheia-page {
+    min-height: 100vh;
+    padding: 6.5rem 1.5rem 4rem;
+    color: #eff6ff;
+    background:
+      radial-gradient(circle at top, rgba(34, 211, 238, 0.15), transparent 24%),
+      radial-gradient(circle at bottom right, rgba(168, 85, 247, 0.18), transparent 24%),
+      #020617;
+  }
+
+  .back-link,
+  .hero,
+  .pipeline,
+  .grid {
+    max-width: 1100px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 1.5rem;
+    padding: 0.78rem 1.05rem;
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    background: rgba(15, 23, 42, 0.72);
+    box-shadow: 0 14px 32px rgba(8, 47, 73, 0.2);
+    color: rgba(186, 230, 253, 0.78);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, color 0.22s ease, background 0.22s ease;
+  }
+
+  .back-link::before {
+    content: '<-';
+    font-size: 0.9rem;
+  }
+
+  .back-link:hover {
+    transform: translateX(-4px);
+    color: #cffafe;
+    border-color: rgba(103, 232, 249, 0.4);
+    background: rgba(8, 47, 73, 0.82);
+  }
+
+  .eyebrow {
+    color: #67e8f9;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  h1 {
+    margin: 0.8rem 0 1rem;
+    font-size: clamp(2.7rem, 7vw, 5.5rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .intro {
+    max-width: 44rem;
+    color: rgba(226, 232, 240, 0.8);
+    line-height: 1.9;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.4rem;
+  }
+
+  .hero-link,
+  .panel-actions a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.55rem;
+    overflow: hidden;
+    padding: 0.84rem 1.2rem;
+    border: 1px solid rgba(125, 211, 252, 0.22);
+    color: #bae6fd;
+    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease, color 0.24s ease;
+  }
+
+  .hero-link::before,
+  .panel-actions a::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.18) 50%, transparent 80%);
+    transform: translateX(-140%);
+    transition: transform 0.45s ease;
+  }
+
+  .hero-link:hover::before,
+  .panel-actions a:hover::before {
+    transform: translateX(140%);
+  }
+
+  .hero-link:hover,
+  .panel-actions a:hover {
+    transform: translateY(-3px);
+    border-color: rgba(103, 232, 249, 0.48);
+    box-shadow: 0 14px 32px rgba(34, 211, 238, 0.14);
+    color: #ecfeff;
+  }
+
+  .hero-link.primary {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.18), rgba(59, 130, 246, 0.18));
+  }
+
+  .hero-link.secondary {
+    background: rgba(15, 23, 42, 0.72);
+  }
+
+  .pipeline {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0.8rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .node,
+  .panel {
+    border: 1px solid rgba(125, 211, 252, 0.18);
+    background: rgba(15, 23, 42, 0.78);
+    box-shadow: inset 0 0 0 1px rgba(34, 211, 238, 0.06);
+  }
+
+  .node {
+    padding: 1rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    text-align: center;
+    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+  }
+
+  .wide {
+    grid-column: span 1;
+  }
+
+  .arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(103, 232, 249, 0.86);
+    transition: transform 0.24s ease, color 0.24s ease;
+  }
+
+  .grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .panel {
+    padding: 1.4rem;
+    transition: transform 0.24s ease, border-color 0.24s ease, box-shadow 0.24s ease, background 0.24s ease;
+  }
+
+  .panel h2 {
+    margin-bottom: 0.9rem;
+    color: #67e8f9;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.98rem;
+  }
+
+  .panel p,
+  .panel li {
+    color: rgba(226, 232, 240, 0.8);
+    line-height: 1.85;
+  }
+
+  .panel ul {
+    padding-left: 1.2rem;
+  }
+
+  .neon {
+    background: linear-gradient(135deg, rgba(8, 47, 73, 0.96), rgba(76, 29, 149, 0.72));
+  }
+
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-top: 1rem;
+  }
+
+  .chips span,
+  .panel a {
+    border: 1px solid rgba(125, 211, 252, 0.2);
+  }
+
+  .chips span {
+    padding: 0.48rem 0.72rem;
+    color: rgba(186, 230, 253, 0.88);
+    font-size: 0.82rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+  }
+
+  .panel-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .node:hover {
+    transform: translateY(-4px);
+    border-color: rgba(103, 232, 249, 0.42);
+    box-shadow: 0 12px 28px rgba(8, 47, 73, 0.28);
+    background: rgba(10, 18, 34, 0.92);
+  }
+
+  .node:hover + .arrow {
+    transform: translateX(4px);
+    color: #a5f3fc;
+  }
+
+  .panel:hover {
+    transform: translateY(-6px);
+    border-color: rgba(103, 232, 249, 0.32);
+    box-shadow: 0 18px 40px rgba(8, 47, 73, 0.3);
+  }
+
+  .chips span:hover {
+    transform: translateY(-2px);
+    border-color: rgba(103, 232, 249, 0.38);
+    background: rgba(8, 47, 73, 0.72);
+    color: #ecfeff;
+  }
+
+  @media (min-width: 860px) {
+    .pipeline {
+      grid-template-columns: 1fr auto 1fr auto 1.6fr auto 1fr auto 1fr;
+      align-items: stretch;
+    }
+
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+</style>

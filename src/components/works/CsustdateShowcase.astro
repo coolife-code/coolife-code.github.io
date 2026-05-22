@@ -1,0 +1,555 @@
+---
+import type { WorkItem } from '../../data/site';
+
+interface Props {
+  work: WorkItem;
+}
+
+const { work } = Astro.props;
+---
+
+<section class="csust-page">
+  <a href="/works" class="back-link">返回作品集</a>
+
+  <div class="page-shell">
+    <header class="hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">WORK 01 / CAMPUS PRODUCT / 2026</p>
+        <h1>{work.title}</h1>
+        <p class="hero-subtitle">{work.subtitle}</p>
+        <p class="hero-detail">{work.detail}</p>
+
+        <div class="cta-row">
+          <a href="https://csustdate.com/" target="_blank" rel="noreferrer" class="cta-button primary">
+            <span>访问项目网站</span>
+          </a>
+          <a href={work.repoUrl} target="_blank" rel="noreferrer" class="cta-button secondary">
+            <span>查看 GitHub</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-panel">
+        <div class="hero-panel-top">
+          <span class="panel-kicker">PROJECT SNAPSHOT</span>
+          <span class="panel-index">01</span>
+        </div>
+        <div class="mock-screen">
+          <div class="mock-bar"></div>
+          <div class="mock-layout">
+            <div class="mock-headline">筛选优于随机</div>
+            <div class="mock-card large"></div>
+            <div class="mock-row">
+              <div class="mock-card"></div>
+              <div class="mock-card"></div>
+            </div>
+            <div class="mock-line"></div>
+            <div class="mock-line short"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <section class="summary-strip">
+      <article>
+        <span>项目类型</span>
+        <strong>校园匹配平台</strong>
+      </article>
+      <article>
+        <span>系统组成</span>
+        <strong>前台 + 管理端 + 后端</strong>
+      </article>
+      <article>
+        <span>核心目标</span>
+        <strong>减少低质量随机匹配</strong>
+      </article>
+    </section>
+
+    <section class="content-grid">
+      <article class="editorial-card intro">
+        <span class="section-label">01 / 项目定位</span>
+        <h2>这不是一个展示站，而是一个完整产品雏形</h2>
+        <p>CSUST DateDrop 面向真实校园场景，想解决的问题不是“给用户更多候选”，而是通过问卷、筛选和投递机制，把相遇路径做得更可解释、更有目标感。</p>
+        <p>它体现的是从业务逻辑到技术结构的一整套设计，而不是只停留在界面层。</p>
+      </article>
+
+      <article class="editorial-card highlights">
+        <span class="section-label">02 / 我做了什么</span>
+        <ul class="feature-list">
+          <li>
+            <strong>用户准入</strong>
+            <p>围绕校园邮箱验证建立注册入口，让用户池本身具备明确边界。</p>
+          </li>
+          <li>
+            <strong>问卷建模</strong>
+            <p>通过结构化问卷采集特征，为后续匹配逻辑提供数据基础。</p>
+          </li>
+          <li>
+            <strong>匹配投递</strong>
+            <p>把计算结果与邮件机制结合，形成稳定的结果触达链路。</p>
+          </li>
+        </ul>
+      </article>
+
+      <article class="editorial-card architecture">
+        <span class="section-label">03 / 系统结构</span>
+        <div class="stack-grid">
+          <div class="stack-block">
+            <em>Frontend</em>
+            <p>Vue 3、Vite、Tailwind CSS、Pinia、Vue Router</p>
+          </div>
+          <div class="stack-block">
+            <em>Backend</em>
+            <p>Koa、SQLite、Sequelize、JWT、Nodemailer</p>
+          </div>
+          <div class="stack-block">
+            <em>Modules</em>
+            <p>用户资料、问卷系统、匹配算法、邮件系统、基础管理能力</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="editorial-card flow-card">
+        <span class="section-label">04 / 关键流程</span>
+        <div class="flow-list">
+          <div><b>01</b><span>注册与校验</span></div>
+          <div><b>02</b><span>录入问卷</span></div>
+          <div><b>03</b><span>计算筛选</span></div>
+          <div><b>04</b><span>结果投递</span></div>
+        </div>
+      </article>
+    </section>
+
+    <section class="closing-grid">
+      <article class="statement-card">
+        <span class="section-label">05 / 作品表达</span>
+        <p class="statement-small">这个作品想表达的，不只是“我能写页面”。</p>
+        <p class="statement-big">我能把一个想法做成可运行的系统。</p>
+      </article>
+
+      <article class="tag-card">
+        <span class="section-label">06 / 技术标签</span>
+        <div class="tags">
+          {work.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+      </article>
+    </section>
+  </div>
+</section>
+
+<style>
+  .csust-page {
+    min-height: 100vh;
+    padding: 6rem 1rem 4rem;
+    background:
+      radial-gradient(circle at top left, rgba(0, 0, 0, 0.04), transparent 25%),
+      linear-gradient(180deg, #f3f1ec 0%, #ebe7df 100%);
+    color: #101010;
+  }
+
+  .back-link {
+    display: block;
+    width: min(100%, 1180px);
+    margin: 0 auto 1.25rem;
+    color: rgba(16, 16, 16, 0.68);
+    letter-spacing: 0.08em;
+    font-weight: 600;
+  }
+
+  .page-shell {
+    width: min(100%, 1180px);
+    margin: 0 auto;
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.88fr);
+    gap: 1.4rem;
+    align-items: stretch;
+  }
+
+  .hero-copy,
+  .hero-panel,
+  .editorial-card,
+  .summary-strip article,
+  .statement-card,
+  .tag-card {
+    border: 1px solid rgba(16, 16, 16, 0.12);
+    background: rgba(255, 255, 255, 0.72);
+    box-shadow: 0 18px 50px rgba(0, 0, 0, 0.06);
+  }
+
+  .hero-copy {
+    padding: 2rem;
+  }
+
+  .eyebrow,
+  .section-label,
+  .panel-kicker {
+    display: inline-flex;
+    margin-bottom: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(16, 16, 16, 0.6);
+  }
+
+  h1,
+  h2 {
+    font-family: 'Noto Sans SC', sans-serif;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+    line-height: 0.94;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 6.8rem);
+  }
+
+  .hero-subtitle {
+    margin: 1rem 0 0;
+    font-size: 1.5rem;
+    font-weight: 700;
+  }
+
+  .hero-detail {
+    max-width: 42rem;
+    margin-top: 1.2rem;
+    font-size: 1.08rem;
+    line-height: 1.85;
+    color: rgba(16, 16, 16, 0.72);
+  }
+
+  .cta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 2rem;
+  }
+
+  .cta-button {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 190px;
+    min-height: 56px;
+    padding: 0 1.4rem;
+    overflow: hidden;
+    border: 1px solid #111;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, color 0.25s ease,
+      background 0.25s ease;
+  }
+
+  .cta-button::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 20%, rgba(255, 255, 255, 0.6) 50%, transparent 80%);
+    transform: translateX(-120%);
+    transition: transform 0.45s ease;
+  }
+
+  .cta-button span {
+    position: relative;
+    z-index: 1;
+  }
+
+  .cta-button:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 30px rgba(0, 0, 0, 0.12);
+  }
+
+  .cta-button:hover::before {
+    transform: translateX(120%);
+  }
+
+  .cta-button.primary {
+    background: #111;
+    color: #fff;
+  }
+
+  .cta-button.secondary {
+    background: transparent;
+    color: #111;
+  }
+
+  .hero-panel {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 1.4rem;
+  }
+
+  .hero-panel-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .panel-index {
+    font-size: 3rem;
+    line-height: 1;
+    font-weight: 800;
+  }
+
+  .mock-screen {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    min-height: 100%;
+    padding: 1rem;
+    border: 1px solid rgba(16, 16, 16, 0.16);
+    background:
+      linear-gradient(180deg, rgba(16, 16, 16, 0.02), rgba(16, 16, 16, 0.06)),
+      #fcfbf8;
+  }
+
+  .mock-bar,
+  .mock-card,
+  .mock-line {
+    background: rgba(16, 16, 16, 0.1);
+  }
+
+  .mock-bar {
+    width: 96px;
+    height: 12px;
+  }
+
+  .mock-layout {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .mock-headline {
+    font-size: 2rem;
+    font-weight: 800;
+    line-height: 1.1;
+  }
+
+  .mock-card {
+    height: 72px;
+  }
+
+  .mock-card.large {
+    height: 150px;
+  }
+
+  .mock-row {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.9rem;
+  }
+
+  .mock-line {
+    height: 14px;
+  }
+
+  .mock-line.short {
+    width: 60%;
+  }
+
+  .summary-strip {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .summary-strip article {
+    padding: 1.1rem 1.2rem;
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .summary-strip article:hover,
+  .editorial-card:hover,
+  .statement-card:hover,
+  .tag-card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(16, 16, 16, 0.28);
+  }
+
+  .summary-strip span {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(16, 16, 16, 0.58);
+  }
+
+  .summary-strip strong {
+    font-size: 1.08rem;
+    line-height: 1.5;
+  }
+
+  .content-grid,
+  .closing-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .content-grid {
+    grid-template-columns: 1.08fr 0.92fr;
+  }
+
+  .closing-grid {
+    grid-template-columns: 1.2fr 0.8fr;
+  }
+
+  .editorial-card,
+  .statement-card,
+  .tag-card {
+    padding: 1.6rem;
+    transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: clamp(2rem, 5vw, 3.6rem);
+  }
+
+  .editorial-card p,
+  .stack-block p,
+  .feature-list p,
+  .flow-list span,
+  .statement-small {
+    color: rgba(16, 16, 16, 0.72);
+    line-height: 1.78;
+  }
+
+  .feature-list {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .feature-list li {
+    padding-top: 0.9rem;
+    border-top: 1px solid rgba(16, 16, 16, 0.12);
+  }
+
+  .feature-list li:first-child {
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .feature-list strong {
+    display: block;
+    margin-bottom: 0.35rem;
+    font-size: 1.15rem;
+  }
+
+  .stack-grid {
+    display: grid;
+    gap: 0.9rem;
+  }
+
+  .stack-block {
+    padding: 1rem;
+    border: 1px solid rgba(16, 16, 16, 0.12);
+    background: rgba(16, 16, 16, 0.03);
+  }
+
+  .stack-block em {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .flow-list {
+    display: grid;
+    gap: 0.8rem;
+  }
+
+  .flow-list div {
+    display: grid;
+    grid-template-columns: 68px 1fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.9rem 0;
+    border-top: 1px solid rgba(16, 16, 16, 0.12);
+  }
+
+  .flow-list div:first-child {
+    border-top: 0;
+    padding-top: 0;
+  }
+
+  .flow-list b {
+    font-size: 2rem;
+    line-height: 1;
+  }
+
+  .statement-card {
+    display: grid;
+    align-content: space-between;
+    min-height: 260px;
+  }
+
+  .statement-big {
+    margin: 0.8rem 0 0;
+    font-family: 'Noto Sans SC', sans-serif;
+    font-size: clamp(2.2rem, 5vw, 4.4rem);
+    line-height: 1.04;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .tags span {
+    padding: 0.55rem 0.85rem;
+    border: 1px solid rgba(16, 16, 16, 0.2);
+    background: rgba(16, 16, 16, 0.04);
+    font-size: 0.88rem;
+    font-weight: 700;
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+
+  .tags span:hover {
+    transform: translateY(-2px);
+    background: rgba(16, 16, 16, 0.08);
+  }
+
+  @media (max-width: 980px) {
+    .hero-grid,
+    .content-grid,
+    .closing-grid,
+    .summary-strip {
+      grid-template-columns: 1fr;
+    }
+
+    h1 {
+      font-size: clamp(2.8rem, 12vw, 5.4rem);
+    }
+  }
+
+  @media (max-width: 640px) {
+    .hero-copy,
+    .hero-panel,
+    .editorial-card,
+    .statement-card,
+    .tag-card {
+      padding: 1.2rem;
+    }
+
+    .mock-row {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

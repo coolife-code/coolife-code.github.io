@@ -1,0 +1,289 @@
+---
+import type { WorkItem } from '../../data/site';
+
+interface Props {
+  work: WorkItem;
+}
+
+const { work } = Astro.props;
+---
+
+<section class="ifnoai-page">
+  <a href="/works" class="back-link">返回作品集</a>
+
+  <div class="terminal">
+    <div class="terminal-bar">
+      <span></span><span></span><span></span>
+    </div>
+    <div class="terminal-body">
+      <p class="prompt">system@self:~$ launch ifnoai</p>
+      <h1>{work.title}</h1>
+      <p class="subtitle">{work.subtitle}</p>
+      <p class="lead">{work.detail}</p>
+      <div class="hero-actions">
+        <a href={work.repoUrl} target="_blank" rel="noreferrer" class="terminal-link primary">inspect repository</a>
+        <a href="#notes" class="terminal-link secondary">read concept</a>
+      </div>
+
+      <div class="command-grid">
+        <article>
+          <span>01</span>
+          <h2>Severance</h2>
+          <p>通过 Hosts 修改与请求拦截，把主流 AI 服务从系统层面切断。</p>
+        </article>
+        <article>
+          <span>02</span>
+          <h2>Sinkhole</h2>
+          <p>把原本会发往云端的请求导入空洞，让依赖感被直接看见。</p>
+        </article>
+        <article>
+          <span>03</span>
+          <h2>Reflection</h2>
+          <p>借由倒计时和使用统计，把“离开 AI 后会发生什么”变成一次主动实验。</p>
+        </article>
+      </div>
+    </div>
+  </div>
+
+  <section class="essay" id="notes">
+    <article>
+      <h3>这不是普通工具页</h3>
+      <p>IfNoAI 最有意思的地方，在于它把功能性项目做成了一次叙事实验。它既是一个 Windows 桌面工具，也是一种关于依赖与自我能力的提问。</p>
+    </article>
+    <article>
+      <h3>技术实现</h3>
+      <p>项目使用 Python 构建，运行于 Windows 环境，通过管理员权限修改 Hosts，并提供 GUI/CLI 两种入口以适配不同使用方式。</p>
+    </article>
+    <article>
+      <h3>作品气质</h3>
+      <p>它的价值不只是“能不能拦截成功”，而是把技术实现、概念包装和情绪体验统一起来，形成鲜明的个人表达。</p>
+      <div class="tags">
+        {work.tags.map((tag) => <span>{tag}</span>)}
+      </div>
+      <a href={work.repoUrl} target="_blank" rel="noreferrer">inspect repository</a>
+    </article>
+  </section>
+</section>
+
+<style>
+  .ifnoai-page {
+    min-height: 100vh;
+    padding: 6rem 1.5rem 4rem;
+    background: #050505;
+    color: #d1fae5;
+    font-family: 'Inter', sans-serif;
+  }
+
+  .back-link,
+  .terminal,
+  .essay {
+    max-width: 1080px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    margin-bottom: 1.2rem;
+    padding: 0.76rem 1rem;
+    border: 1px solid rgba(110, 231, 183, 0.2);
+    background: rgba(16, 185, 129, 0.05);
+    color: #6ee7b7;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.76rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+  }
+
+  .back-link::before {
+    content: '[<-]';
+    font-size: 0.8rem;
+  }
+
+  .back-link:hover {
+    transform: translateX(-4px);
+    border-color: rgba(110, 231, 183, 0.38);
+    background: rgba(16, 185, 129, 0.12);
+    color: #d1fae5;
+  }
+
+  .terminal {
+    border: 1px solid rgba(110, 231, 183, 0.25);
+    background: linear-gradient(180deg, rgba(16, 16, 16, 0.98), rgba(5, 5, 5, 1));
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.08), 0 20px 80px rgba(0, 0, 0, 0.45);
+    transition: transform 0.28s ease, box-shadow 0.28s ease, border-color 0.28s ease;
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 0.45rem;
+    padding: 0.9rem 1rem;
+    border-bottom: 1px solid rgba(110, 231, 183, 0.14);
+  }
+
+  .terminal-bar span {
+    width: 0.72rem;
+    height: 0.72rem;
+    border-radius: 50%;
+    background: rgba(110, 231, 183, 0.6);
+  }
+
+  .terminal-body {
+    padding: 1.4rem;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.85rem;
+    margin-top: 1.3rem;
+    margin-bottom: 1.4rem;
+  }
+
+  .terminal-link,
+  .essay a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    padding: 0.78rem 1rem;
+    border: 1px solid rgba(110, 231, 183, 0.18);
+    color: #6ee7b7;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    font-size: 0.78rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease, box-shadow 0.22s ease;
+  }
+
+  .terminal-link::after,
+  .essay a::after {
+    content: ' >';
+    margin-left: 0.35rem;
+    transition: transform 0.22s ease;
+  }
+
+  .terminal-link:hover::after,
+  .essay a:hover::after {
+    transform: translateX(4px);
+  }
+
+  .terminal-link:hover,
+  .essay a:hover {
+    transform: translateY(-3px);
+    border-color: rgba(110, 231, 183, 0.4);
+    box-shadow: 0 14px 28px rgba(16, 185, 129, 0.12);
+    color: #ecfdf5;
+  }
+
+  .terminal-link.primary {
+    background: rgba(16, 185, 129, 0.12);
+  }
+
+  .terminal-link.secondary {
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .prompt,
+  .subtitle,
+  .command-grid span {
+    color: #6ee7b7;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+  }
+
+  h1 {
+    margin: 0.7rem 0 0.3rem;
+    font-size: clamp(2.6rem, 7vw, 5.4rem);
+    letter-spacing: 0.08em;
+  }
+
+  .lead {
+    max-width: 44rem;
+    color: rgba(209, 250, 229, 0.76);
+    line-height: 1.9;
+  }
+
+  .command-grid,
+  .essay {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.6rem;
+  }
+
+  .command-grid article,
+  .essay article {
+    border: 1px solid rgba(110, 231, 183, 0.16);
+    padding: 1.2rem;
+    background: rgba(16, 185, 129, 0.04);
+    transition: transform 0.24s ease, border-color 0.24s ease, background 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  h2,
+  h3 {
+    margin: 0.55rem 0 0.7rem;
+    color: #ecfdf5;
+    letter-spacing: 0.08em;
+  }
+
+  p {
+    line-height: 1.85;
+  }
+
+  .essay p {
+    color: rgba(209, 250, 229, 0.76);
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin: 1rem 0;
+  }
+
+  .tags span,
+  .essay a {
+    border: 1px solid rgba(110, 231, 183, 0.18);
+  }
+
+  .tags span {
+    padding: 0.45rem 0.8rem;
+    color: #a7f3d0;
+    font-size: 0.8rem;
+    transition: transform 0.22s ease, border-color 0.22s ease, background 0.22s ease, color 0.22s ease;
+  }
+
+  .terminal:hover {
+    transform: translateY(-4px);
+    border-color: rgba(110, 231, 183, 0.34);
+    box-shadow: 0 24px 84px rgba(0, 0, 0, 0.52);
+  }
+
+  .command-grid article:hover,
+  .essay article:hover {
+    transform: translateY(-5px);
+    border-color: rgba(110, 231, 183, 0.3);
+    background: rgba(16, 185, 129, 0.08);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.26);
+  }
+
+  .tags span:hover {
+    transform: translateY(-2px);
+    border-color: rgba(110, 231, 183, 0.36);
+    background: rgba(16, 185, 129, 0.14);
+    color: #ecfdf5;
+  }
+
+  @media (min-width: 860px) {
+    .command-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .essay {
+      grid-template-columns: 1fr 1fr 1.15fr;
+    }
+  }
+</style>

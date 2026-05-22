@@ -1,0 +1,542 @@
+---
+import type { WorkItem } from '../../data/site';
+
+interface Props {
+  work: WorkItem;
+}
+
+const { work } = Astro.props;
+const screenshots = [
+  {
+    src: '/images/works/1000062886.png',
+    alt: 'Reacord 文章阅读界面截图',
+    title: '文章阅读',
+  },
+  {
+    src: '/images/works/1000062887.png',
+    alt: 'Reacord 单词卡片界面截图',
+    title: '单词详情',
+  },
+  {
+    src: '/images/works/1000062888.png',
+    alt: 'Reacord 推荐内容流界面截图',
+    title: '推荐流',
+  },
+  {
+    src: '/images/works/1000062889.png',
+    alt: 'Reacord 单词展示界面截图',
+    title: '词条展示',
+  },
+  {
+    src: '/images/works/1000062890.png',
+    alt: 'Reacord 单词配对游戏界面截图',
+    title: '单词游戏',
+  },
+];
+---
+
+<section class="reacord-page">
+  <a href="/works" class="back-link">返回作品集</a>
+
+  <div class="page-shell">
+    <section class="hero-layout">
+      <article class="intro-panel">
+        <p class="micro">MINIPROGRAM / ENGLISH LEARNING / 2026</p>
+        <h1>{work.title}</h1>
+        <p class="title-note">read+record</p>
+        <p class="summary">{work.description}</p>
+
+        <div class="hero-actions">
+          <a href={work.repoUrl} target="_blank" rel="noreferrer" class="action-link primary">
+            <span>查看仓库</span>
+          </a>
+        </div>
+
+        <div class="tag-row">
+          {work.tags.map((tag) => <span>{tag}</span>)}
+        </div>
+      </article>
+    </section>
+
+    <section class="modules-board">
+      <article class="module-card">
+        <span>VOID</span>
+        <h2>文库</h2>
+        <p>支持文章阅读与导入，让输入不只停留在碎片背诵。</p>
+      </article>
+      <article class="module-card">
+        <span>RESOUND</span>
+        <h2>书架</h2>
+        <p>承接 TXT、EPUB 阅读场景，延长学习停留时长。</p>
+      </article>
+      <article class="module-card">
+        <span>MARK</span>
+        <h2>单词本</h2>
+        <p>围绕积累、复习和配对练习建立重复记忆路径。</p>
+      </article>
+      <article class="module-card accent">
+        <span>AI CARD</span>
+        <h2>助记卡</h2>
+        <p>为单词生成更具个性化的联想内容，降低记忆阻力。</p>
+      </article>
+    </section>
+
+    <section id="screenshots" class="screens-section">
+      <div class="screens-head">
+        <div>
+          <p class="micro">REAL INTERFACES</p>
+          <h2>真实界面展示</h2>
+        </div>
+      </div>
+
+      <div class="phone-gallery">
+        {screenshots.map((shot) => (
+          <figure class="phone-card">
+            <div class="phone-top">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+            <div class="phone-frame">
+              <img src={shot.src} alt={shot.alt} loading="lazy" />
+            </div>
+            <figcaption>
+              <strong>{shot.title}</strong>
+            </figcaption>
+          </figure>
+        ))}
+
+        <article class="phone-card phone-card-feature">
+          <div class="phone-top">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+          <div class="phone-feature-body">
+            <p class="feature-kicker">TRY IT ON WECHAT</p>
+            <h3>体验</h3>
+            <p class="feature-summary">微信小程序搜索：REACORD</p>
+            <div class="feature-points">
+              <span>READ</span>
+              <span>RECORD</span>
+              <span>REVIEW</span>
+            </div>
+            <a href={work.repoUrl} target="_blank" rel="noreferrer" class="feature-link">
+              查看仓库
+            </a>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <section class="notes-grid">
+      <article class="note-card">
+        <h3>项目思路</h3>
+        <p>这个项目试图把“读文章”和“背单词”放进同一条体验路径里，让学习不被拆得太碎。</p>
+      </article>
+      <article class="note-card">
+        <h3>技术落地</h3>
+        <p>小程序端使用 TypeScript，服务端采用 Express + Prisma，并配合 MySQL、Redis 处理数据和缓存。</p>
+      </article>
+      <article class="note-card wide">
+        <h3>产品感</h3>
+        <p>它更像一个持续打磨中的学习产品，而不是简单 demo。功能命名、内容组织与复习承接都明显在服务长期使用体验。</p>
+      </article>
+    </section>
+  </div>
+</section>
+
+<style>
+  .reacord-page {
+    min-height: 100vh;
+    padding: 6rem 1.5rem 4rem;
+    background:
+      radial-gradient(circle at top right, rgba(16, 185, 129, 0.18), transparent 22%),
+      linear-gradient(180deg, #f7fff9 0%, #eafcf3 100%);
+    color: #072814;
+  }
+
+  .back-link {
+    display: block;
+    max-width: 1180px;
+    margin: 0 auto 1.5rem;
+    color: rgba(7, 40, 20, 0.8);
+    font-weight: 600;
+  }
+
+  .page-shell {
+    max-width: 1180px;
+    margin: 0 auto;
+    display: grid;
+    gap: 1.3rem;
+  }
+
+  .hero-layout {
+    display: block;
+  }
+
+  .micro {
+    margin-bottom: 0.4rem;
+    color: #10b981;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  .intro-panel,
+  .module-card,
+  .phone-card,
+  .note-card {
+    border: 1px solid rgba(7, 40, 20, 0.08);
+    background: rgba(255, 255, 255, 0.78);
+    box-shadow: 0 18px 42px rgba(16, 185, 129, 0.08);
+  }
+
+  .intro-panel {
+    padding: 1.7rem;
+    border-radius: 2rem;
+    text-align: center;
+  }
+
+  h1 {
+    margin: 0;
+    font-size: clamp(2.7rem, 7vw, 5.2rem);
+    line-height: 0.95;
+  }
+
+  .title-note {
+    margin-top: 0.55rem;
+    color: #10b981;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.26em;
+  }
+
+  .summary {
+    margin-top: 0.9rem;
+    color: rgba(7, 40, 20, 0.75);
+    line-height: 1.8;
+    max-width: 34rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .module-card p,
+  .note-card p,
+  .phone-card p {
+    color: rgba(7, 40, 20, 0.75);
+    line-height: 1.8;
+  }
+
+  .hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    margin-top: 1.5rem;
+    justify-content: center;
+  }
+
+  .action-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+    min-width: 168px;
+    padding: 0.95rem 1.1rem 0.95rem 1.15rem;
+    border-radius: 1rem;
+    border: 1px solid rgba(6, 95, 70, 0.2);
+    font-weight: 700;
+    transition: transform 0.25s ease, border-color 0.25s ease, background 0.25s ease;
+  }
+
+  .action-link::after {
+    content: '->';
+    font-size: 0.92rem;
+    transition: transform 0.22s ease;
+  }
+
+  .action-link:hover {
+    transform: translateX(4px);
+    border-color: rgba(6, 95, 70, 0.35);
+  }
+
+  .action-link:hover::after {
+    transform: translateX(5px);
+  }
+
+  .action-link.primary {
+    background: #065f46;
+    color: white;
+  }
+
+  .action-link.secondary {
+    background: rgba(255, 255, 255, 0.92);
+    color: #065f46;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-top: 1.4rem;
+    justify-content: center;
+  }
+
+  .tag-row span {
+    padding: 0.45rem 0.8rem;
+    border-radius: 999px;
+    background: #ecfdf5;
+    font-size: 0.82rem;
+    color: #047857;
+  }
+
+  .module-card span,
+  .phone-card strong {
+    display: block;
+  }
+
+  .module-card span,
+  .module-card span {
+    color: rgba(7, 40, 20, 0.45);
+    font-size: 0.78rem;
+    letter-spacing: 0.2em;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  .modules-board {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .module-card {
+    padding: 1.25rem;
+    border-radius: 1.4rem;
+    background: #f8fff9;
+    transition: transform 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .module-card h2,
+  .screens-head h2,
+  .note-card h3 {
+    margin: 0.45rem 0 0.7rem;
+  }
+
+  .accent {
+    background: linear-gradient(135deg, #10b981, #34d399);
+    color: white;
+  }
+
+  .accent span,
+  .accent p {
+    color: rgba(255, 255, 255, 0.9);
+  }
+
+  .screens-section {
+    padding: 1.3rem;
+    border-radius: 2rem;
+    background: rgba(255, 255, 255, 0.62);
+    border: 1px solid rgba(7, 40, 20, 0.08);
+  }
+
+  .screens-head {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: end;
+  }
+
+  .phone-gallery {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 1.3rem;
+  }
+
+  .phone-card {
+    padding: 0.85rem;
+    border-radius: 1.7rem;
+    transition: transform 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  .module-card:hover,
+  .phone-card:hover,
+  .note-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 22px 42px rgba(16, 185, 129, 0.12);
+  }
+
+  .phone-top {
+    display: flex;
+    gap: 0.35rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .phone-top span {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background: rgba(6, 95, 70, 0.22);
+  }
+
+  .phone-frame {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+    max-height: 420px;
+    overflow: hidden;
+    border-radius: 1.2rem;
+    border: 1px solid rgba(7, 40, 20, 0.08);
+    background: #f1f5f9;
+  }
+
+  .phone-frame img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 400px;
+    object-fit: contain;
+    object-position: top center;
+  }
+
+  .phone-card figcaption {
+    margin-top: 0.75rem;
+  }
+
+  .phone-card strong {
+    margin-bottom: 0.35rem;
+    font-size: 1rem;
+  }
+
+
+  .phone-card-feature {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .feature-summary {
+    margin: 0;
+    color: rgba(7, 40, 20, 0.78);
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.75;
+    text-transform: uppercase;
+  }
+
+  .phone-feature-body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 320px;
+    padding: 0.45rem 0.2rem 0.2rem;
+  }
+
+  .feature-kicker {
+    margin: 0;
+    color: #10b981;
+    font-size: 0.74rem;
+    font-weight: 800;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+  }
+
+  .phone-card-feature h3 {
+    margin: 0.8rem 0 0.9rem;
+    color: #064e3b;
+    font-size: 1.6rem;
+    line-height: 1.2;
+    text-transform: uppercase;
+  }
+
+  .feature-points {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin: 1rem 0 1.1rem;
+  }
+
+  .feature-points span {
+    padding: 0.45rem 0.75rem;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #047857;
+    font-size: 0.82rem;
+    font-weight: 700;
+  }
+
+  .feature-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    padding-bottom: 0.2rem;
+    border-bottom: 1px solid rgba(6, 95, 70, 0.24);
+    color: #065f46;
+    font-weight: 700;
+    transition: gap 0.2s ease, border-color 0.2s ease;
+  }
+
+  .feature-link::after {
+    content: '->';
+    transition: transform 0.2s ease;
+  }
+
+  .feature-link:hover {
+    gap: 0.8rem;
+    border-color: rgba(6, 95, 70, 0.5);
+  }
+
+  .feature-link:hover::after {
+    transform: translateX(2px);
+  }
+
+  .notes-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  .note-card {
+    padding: 1.35rem;
+    border-radius: 1.5rem;
+    transition: transform 0.24s ease, box-shadow 0.24s ease;
+  }
+
+  @media (max-width: 1080px) {
+    .screens-head,
+    .modules-board,
+    .notes-grid,
+    .phone-gallery {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .modules-board,
+    .notes-grid,
+    .screens-head,
+    .phone-gallery {
+      grid-template-columns: 1fr;
+    }
+
+    .intro-panel,
+    .overview-panel,
+    .screens-section,
+    .note-card {
+      padding: 1.15rem;
+    }
+
+    .phone-frame {
+      min-height: 280px;
+      max-height: 360px;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 13vw, 4.2rem);
+    }
+  }
+</style>

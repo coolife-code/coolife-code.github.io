@@ -1,29 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-
-const works = [
-  {
-    slug: 'project-one',
-    title: 'PROJECT ONE',
-    description: 'A web application built with modern technologies',
-    tags: ['Web', 'React', 'TypeScript'],
-    year: '2024',
-  },
-  {
-    slug: 'project-two',
-    title: 'PROJECT TWO',
-    description: 'Mobile app for productivity enthusiasts',
-    tags: ['Mobile', 'Flutter'],
-    year: '2024',
-  },
-  {
-    slug: 'project-three',
-    title: 'PROJECT THREE',
-    description: 'Data visualization dashboard',
-    tags: ['Data', 'D3.js', 'Python'],
-    year: '2023',
-  },
-];
+import { works } from '../../data/site';
 ---
 
 <Layout title="Works - Personal Page" currentPage="/works">
