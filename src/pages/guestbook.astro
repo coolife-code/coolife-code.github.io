@@ -24,15 +24,23 @@ import PageNav from '../components/PageNav.astro';
 
       <div class="guestbook-content" style="animation-delay: 0.2s">
         <p class="guestbook-intro">
-          Welcome to my guestbook! Feel free to leave a message, share your thoughts, or just say hello.
+            说点什么吧，别让路过这件事毫无意义。。。
         </p>
         
-        <div class="utterances-container">
+        <div class="giscus-container">
           <script 
-            src="https://utteranc.es/client.js"
-            repo="coolife-code/personal-page"
-            issue-term="pathname"
-            theme="dark"
+            src="https://giscus.app/client.js"
+            data-repo="coolife-code/coolife-code.github.io"
+            data-repo-id="R_kgDORzLHZg"
+            data-category="Announcements"
+            data-category-id="DIC_kwDORzLHZs4C9mp0"
+            data-mapping="pathname"
+            data-strict="0"
+            data-reactions-enabled="1"
+            data-emit-metadata="0"
+            data-input-position="bottom"
+            data-theme="preferred_color_scheme"
+            data-lang="zh-CN"
             crossorigin="anonymous"
             async
           ></script>
@@ -141,32 +149,35 @@ import PageNav from '../components/PageNav.astro';
     }
   }
 
-  .utterances-container {
+  .giscus-container {
     min-height: 300px;
   }
 
-  :global(.utterances) {
+  :global(.giscus) {
     max-width: 100% !important;
   }
 
-  :global(.utterances-frame) {
+  :global(.giscus-frame) {
     width: 100% !important;
   }
 </style>
 
 <script>
-  // 监听主题变化，同步更新 utterances 主题
+  // 监听主题变化，同步更新 giscus 主题
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {
       if (mutation.type === 'attributes' && mutation.attributeName === 'data-theme') {
         const theme = document.documentElement.getAttribute('data-theme');
-        const utterancesFrame = document.querySelector('.utterances-frame') as HTMLIFrameElement;
-        if (utterancesFrame) {
+        const giscusFrame = document.querySelector('.giscus-frame') as HTMLIFrameElement;
+        if (giscusFrame) {
           const message = {
-            type: 'set-theme',
-            theme: theme === 'light' ? 'github-light' : 'dark'
+            giscus: {
+              setConfig: {
+                theme: theme === 'light' ? 'light' : 'dark'
+              }
+            }
           };
-          utterancesFrame.contentWindow?.postMessage(message, 'https://utteranc.es');
+          giscusFrame.contentWindow?.postMessage(message, 'https://giscus.app');
         }
       }
     });

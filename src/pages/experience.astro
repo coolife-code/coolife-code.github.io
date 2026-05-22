@@ -5,31 +5,33 @@ import PageNav from '../components/PageNav.astro';
 
 const experiences = [
   {
-    period: '2023 - Present',
-    title: 'Full Stack Developer',
-    company: 'Independent',
-    description: 'Building personal projects and exploring new technologies.',
+    period: '2024 - 至今',
+    title: '全栈开发者',
+    company: '独立开发',
+    description: '持续打磨个人项目，并探索新的技术方向。',
   },
   {
     period: '2021 - 2023',
-    title: 'Software Engineer',
-    company: 'Tech Company',
-    description: 'Developed web applications and contributed to open source.',
+    title: '软件工程师',
+    company: '科技公司',
+    description: '参与 Web 应用开发，并持续进行开源贡献。',
+    fake: true,
   },
   {
     period: '2019 - 2021',
-    title: 'Junior Developer',
-    company: 'Startup',
-    description: 'Started my journey in software development.',
+    title: '初级开发者',
+    company: '创业团队',
+    description: '从这里开始进入软件开发的世界。',
+    fake: true,
   },
 ];
 
 const education = [
   {
-    period: '2015 - 2019',
-    degree: 'Bachelor\'s Degree',
-    school: 'University',
-    field: 'Computer Science',
+    period: '2024 - 2028',
+    degree: '本科',
+    school: '长沙理工大学',
+    field: '计算机科学',
   },
 ];
 ---
@@ -58,7 +60,7 @@ const education = [
           <div class="timeline-items">
             {experiences.map((exp, index) => (
               <div 
-                class="timeline-item"
+                class:list={['timeline-item', exp.fake && 'timeline-item-fake']}
                 style={`animation-delay: ${(index + 2) * 0.1}s`}
               >
                 <div class="timeline-marker"></div>
@@ -256,6 +258,17 @@ const education = [
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
+    position: relative;
+  }
+
+  .timeline-item-fake .timeline-period,
+  .timeline-item-fake .timeline-title,
+  .timeline-item-fake .timeline-company,
+  .timeline-item-fake .timeline-description {
+    text-decoration: line-through;
+    text-decoration-color: rgba(0, 0, 0, 0.9);
+    text-decoration-thickness: 2px;
+    opacity: 0.7;
   }
 
   .timeline-period {

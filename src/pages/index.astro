@@ -20,17 +20,13 @@ import { siteConfig } from '../data/site';
 
   <!-- 深度预览层 -->
   <DepthLayer />
+
+  <!-- 将首页交互脚本放进布局内容，避免构建后落在 </html> 之后 -->
+  <script>
+    import { initHomeInteractions } from '../scripts/home/interactions';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      initHomeInteractions();
+    });
+  </script>
 </Layout>
-
-<!-- 引入样式 -->
-<link rel="stylesheet" href="/src/styles/home/index.css">
-
-<!-- 引入交互脚本 -->
-<script>
-  import { initHomeInteractions } from '../scripts/home/interactions';
-  
-  // 初始化交互
-  document.addEventListener('DOMContentLoaded', () => {
-    initHomeInteractions();
-  });
-</script>

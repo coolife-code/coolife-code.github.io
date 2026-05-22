@@ -14,37 +14,18 @@ import Layout from '../layouts/Layout.astro';
       <div class="about-content">
         <div class="about-text">
           <p class="about-paragraph" style="animation-delay: 0.2s">
-            Welcome to my personal space on the internet.
+            欢迎来到我的个人角落。
           </p>
           <p class="about-paragraph" style="animation-delay: 0.3s">
-            This is where I document my reading journey and creative projects. 
-            Each book I read opens a new world, and each project I create is an expression of my curiosity.
+            这里记录着我的阅读轨迹，也收纳着我做过的项目和一些还没成形的想法。
+            每读完一本书，都会像推开一扇新的门；每完成一个项目，都是我和好奇心的一次对话。
           </p>
           <p class="about-paragraph" style="animation-delay: 0.4s">
-            I believe in the power of continuous learning and creation. 
-            Through reading, we understand the world; through creating, we understand ourselves.
+            我始终相信，持续学习和持续创造会慢慢塑造一个人。
+            阅读让我更理解世界，创造让我更理解自己。
           </p>
         </div>
 
-        <div class="connect-section" style="animation-delay: 0.5s">
-          <h2 class="connect-title">CONNECT</h2>
-          <div class="connect-links">
-            <a 
-              href="https://github.com/coolife-code" 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              class="connect-link"
-            >
-              GITHUB
-            </a>
-            <a 
-              href="mailto:hello@example.com" 
-              class="connect-link"
-            >
-              EMAIL
-            </a>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -142,51 +123,4 @@ import Layout from '../layouts/Layout.astro';
     }
   }
 
-  .connect-section {
-    opacity: 0;
-    animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-  }
-
-  .connect-title {
-    font-size: 1.25rem;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    margin-bottom: 2.5rem;
-  }
-
-  @media (min-width: 768px) {
-    .connect-title {
-      font-size: 1.5rem;
-    }
-  }
-
-  .connect-links {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1.5rem;
-  }
-
-  .connect-link {
-    color: white;
-    font-size: 0.875rem;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    font-weight: 500;
-    transition: all 0.5s ease-in-out;
-    padding: 0.75rem 1.5rem;
-    border: 1px solid rgb(55, 65, 81);
-  }
-
-  @media (min-width: 768px) {
-    .connect-link {
-      font-size: 1rem;
-    }
-  }
-
-  .connect-link:hover {
-    letter-spacing: 0.5em;
-    background: rgb(31, 41, 55);
-  }
 </style>
