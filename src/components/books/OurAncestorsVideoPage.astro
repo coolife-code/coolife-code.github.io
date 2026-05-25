@@ -1,0 +1,550 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getBookBySlug } from '../../data/books';
+
+const book = getBookBySlug('our-ancestors');
+
+if (!book) {
+  throw new Error('未找到《我们的祖先》的书籍数据。');
+}
+
+const coverVideo = '/1000063173.mp4';
+const downloadHref = encodeURI('/images/books/我们的祖先三部曲：《分成两半的子爵》《书上的男爵》《不存在的骑士》 ([意大利]伊塔洛·卡尔维诺) (Z-Library).epub');
+
+const trilogyPanels = [
+  {
+    index: 'I',
+    title: '分成两半的子爵',
+    mood: '裂开',
+    text: '一个人在战争里被炮火劈成善与恶两半，卡尔维诺却没有把它写成简单的道德寓言，而是写成对完整人格的追问。',
+  },
+  {
+    index: 'II',
+    title: '树上的男爵',
+    mood: '生长',
+    text: '柯西莫从餐桌边跃上树枝，此后终生不再落地。离开地面并没有让他远离生活，反而让他更清楚地观看世界。',
+  },
+  {
+    index: 'III',
+    title: '不存在的骑士',
+    mood: '回声',
+    text: '只剩盔甲与意志的骑士仍坚持秩序、身份与使命，像一个空心却精确的现代人，在世界里发出冰冷而清醒的声响。',
+  },
+];
+
+const atmosphereNotes = [
+  '这本书最打动人的，不只是它聪明，而是它始终保留着一种轻盈的生命感。人物会受伤、出走、僵硬、分裂，但故事本身从不沉闷。',
+  '它让树冠、风、草木、金属、骑行与远望都变成叙事的一部分，所以这次页面没有做成纯文学陈列，而是让视频的流动感和页面排版一起呼吸。',
+  '我想让这个页面像一块会缓慢发光的幕布：既有思想的轮廓，也有身体与自然的温度。',
+];
+
+const readingFragments = [
+  '人可以被现实撕裂，却仍渴望重新成为一个完整的人。',
+  '人可以主动离开地面，却不一定因此离开世界。',
+  '人甚至可能只剩一副形式，却还在执拗地维持意义。',
+];
+---
+
+<Layout title={`${book.title} - 影像书页`} description={book.intro} currentPage="/books">
+  <section class="ancestor-page">
+    <div class="ambient ambient-a" aria-hidden="true"></div>
+    <div class="ambient ambient-b" aria-hidden="true"></div>
+    <div class="ambient ambient-c" aria-hidden="true"></div>
+
+    <div class="page-shell">
+      <a href="/books" class="back-link">返回 Books</a>
+
+      <section class="hero-grid">
+        <div class="hero-copy glass-panel">
+          <p class="eyebrow">Video Cover / Living Classic</p>
+          <h1>{book.title}</h1>
+          <p class="hero-subtitle">{book.subtitle}</p>
+          <p class="hero-intro">{book.intro}</p>
+
+          <div class="meta-row" aria-label="书籍标签">
+            {book.tags.map((tag) => (
+              <span class="tag-chip">{tag}</span>
+            ))}
+          </div>
+
+          <div class="quote-block">
+            <span class="quote-label">Reading Pulse</span>
+            <p>
+              半身、树冠与空盔甲，看起来像三次奇想，真正被写出的却是现代人的困境：
+              我们如何保住自己，如何离开秩序，如何在空心时仍然活着。
+            </p>
+          </div>
+        </div>
+
+        <div class="video-panel">
+          <video
+            class="cover-video"
+            src={coverVideo}
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            disablepictureinpicture
+            disableremoteplayback
+          ></video>
+          <div class="video-shade"></div>
+          <div class="video-copy">
+            <p class="video-kicker">Italo Calvino</p>
+            <p class="video-title">Our Ancestors</p>
+            <p class="video-note">让画面里的流动，替书页说出风、树液、盔甲反光和生命本身的呼吸。</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="trilogy-section">
+        <div class="section-heading">
+          <p class="section-kicker">Three Movements</p>
+          <h2>三次出走，组成一部会呼吸的寓言</h2>
+        </div>
+
+        <div class="trilogy-grid">
+          {trilogyPanels.map((panel) => (
+            <article class="trilogy-card">
+              <span class="card-index">{panel.index}</span>
+              <p class="card-mood">{panel.mood}</p>
+              <h3>{panel.title}</h3>
+              <p>{panel.text}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section class="essay-grid">
+        <article class="glass-panel prose-panel">
+          <p class="section-kicker">Why It Lives</p>
+          <h2>为什么它不是冷的哲学书</h2>
+          {atmosphereNotes.map((item) => (
+            <p>{item}</p>
+          ))}
+        </article>
+
+        <article class="glass-panel fragment-panel">
+          <p class="section-kicker">Inner Weather</p>
+          <h2>这本书留下的三种回声</h2>
+          <div class="fragment-list">
+            {readingFragments.map((item, index) => (
+              <p><span>{String(index + 1).padStart(2, '0')}</span>{item}</p>
+            ))}
+          </div>
+          <p class="fragment-tail">{book.inspiration}</p>
+        </article>
+      </section>
+
+      <section class="archive-panel glass-panel">
+        <div>
+          <p class="section-kicker">Archive</p>
+          <h2>下载原书</h2>
+          <p class="archive-copy">
+            已接入 EPUB 原文件，适合继续完整阅读《分成两半的子爵》《树上的男爵》《不存在的骑士》三部曲。
+          </p>
+          <p class="archive-meta">{book.author} · {book.year}</p>
+        </div>
+
+        <a
+          href={downloadHref}
+          download="我们的祖先 - 伊塔洛·卡尔维诺.epub"
+          class="download-link"
+        >
+          下载 EPUB
+        </a>
+      </section>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  :global(body) {
+    background:
+      radial-gradient(circle at 20% 18%, rgba(109, 168, 120, 0.26), transparent 32%),
+      radial-gradient(circle at 82% 16%, rgba(245, 190, 92, 0.16), transparent 26%),
+      radial-gradient(circle at 52% 88%, rgba(66, 141, 112, 0.18), transparent 28%),
+      linear-gradient(180deg, #050b08 0%, #09110d 42%, #101915 100%);
+    color: #f5f3ec;
+  }
+
+  .ancestor-page {
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    padding: 6.8rem 1.5rem 4rem;
+  }
+
+  .ambient {
+    position: absolute;
+    border-radius: 999px;
+    filter: blur(70px);
+    pointer-events: none;
+    opacity: 0.58;
+  }
+
+  .ambient-a {
+    top: 8rem;
+    left: -5rem;
+    width: 16rem;
+    height: 16rem;
+    background: rgba(90, 152, 112, 0.24);
+  }
+
+  .ambient-b {
+    top: 16rem;
+    right: -4rem;
+    width: 18rem;
+    height: 18rem;
+    background: rgba(218, 160, 74, 0.18);
+  }
+
+  .ambient-c {
+    bottom: 4rem;
+    left: 35%;
+    width: 20rem;
+    height: 12rem;
+    background: rgba(86, 160, 135, 0.14);
+  }
+
+  .page-shell {
+    position: relative;
+    z-index: 1;
+    max-width: 1220px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(245, 243, 236, 0.82);
+    text-decoration: none;
+    font-size: 0.8rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .back-link:hover {
+    opacity: 0.7;
+  }
+
+  .hero-grid,
+  .essay-grid {
+    display: grid;
+    gap: 1.4rem;
+  }
+
+  .hero-grid {
+    margin-top: 1.2rem;
+  }
+
+  .glass-panel,
+  .video-panel,
+  .trilogy-card {
+    border: 1px solid rgba(236, 235, 224, 0.12);
+    background: rgba(10, 16, 13, 0.55);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.24);
+    backdrop-filter: blur(20px);
+  }
+
+  .glass-panel {
+    border-radius: 1.8rem;
+    padding: 1.4rem;
+  }
+
+  .eyebrow,
+  .section-kicker,
+  .video-kicker,
+  .archive-meta,
+  .quote-label {
+    margin: 0;
+    color: rgba(221, 232, 214, 0.72);
+    font-size: 0.76rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+
+  .hero-copy h1,
+  .section-heading h2,
+  .prose-panel h2,
+  .fragment-panel h2,
+  .archive-panel h2 {
+    margin: 0;
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+  }
+
+  .hero-copy h1 {
+    margin-top: 0.85rem;
+    font-size: clamp(3rem, 10vw, 6.8rem);
+  }
+
+  .hero-subtitle {
+    margin: 1rem 0 0;
+    max-width: 34rem;
+    color: rgba(245, 243, 236, 0.86);
+    font-size: 1.05rem;
+    line-height: 1.9;
+  }
+
+  .hero-intro,
+  .prose-panel p,
+  .archive-copy {
+    color: rgba(233, 235, 227, 0.74);
+    line-height: 1.95;
+  }
+
+  .hero-intro {
+    max-width: 38rem;
+    margin-top: 1rem;
+  }
+
+  .meta-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    margin-top: 1.35rem;
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.45rem 0.82rem;
+    border-radius: 999px;
+    border: 1px solid rgba(222, 229, 213, 0.14);
+    background: rgba(250, 248, 240, 0.05);
+    color: rgba(242, 244, 236, 0.9);
+    font-size: 0.82rem;
+  }
+
+  .quote-block {
+    margin-top: 1.6rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(222, 229, 213, 0.1);
+  }
+
+  .quote-block p {
+    margin: 0.7rem 0 0;
+    max-width: 34rem;
+    color: rgba(249, 244, 231, 0.92);
+    font-size: clamp(1.15rem, 2vw, 1.55rem);
+    line-height: 1.8;
+  }
+
+  .video-panel {
+    position: relative;
+    overflow: hidden;
+    min-height: 420px;
+    border-radius: 2rem 2rem 5.8rem 2rem;
+  }
+
+  .cover-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .video-shade {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(180deg, rgba(0, 0, 0, 0.14), rgba(4, 9, 7, 0.56)),
+      radial-gradient(circle at 68% 18%, rgba(240, 212, 156, 0.22), transparent 22%),
+      linear-gradient(135deg, rgba(14, 28, 22, 0.08), rgba(14, 28, 22, 0.7));
+  }
+
+  .video-copy {
+    position: absolute;
+    inset: auto 1.2rem 1.2rem 1.2rem;
+    display: grid;
+    gap: 0.55rem;
+  }
+
+  .video-title {
+    margin: 0;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    letter-spacing: -0.04em;
+    line-height: 0.95;
+    font-weight: 700;
+  }
+
+  .video-note {
+    margin: 0;
+    max-width: 22rem;
+    color: rgba(244, 240, 232, 0.84);
+    line-height: 1.8;
+  }
+
+  .trilogy-section {
+    margin-top: 1.8rem;
+  }
+
+  .section-heading h2,
+  .prose-panel h2,
+  .fragment-panel h2,
+  .archive-panel h2 {
+    font-size: clamp(1.7rem, 4vw, 3rem);
+  }
+
+  .section-heading h2 {
+    margin-top: 0.5rem;
+    max-width: 16ch;
+  }
+
+  .trilogy-grid {
+    display: grid;
+    gap: 1rem;
+    margin-top: 1.2rem;
+  }
+
+  .trilogy-card {
+    border-radius: 1.6rem;
+    padding: 1.3rem;
+  }
+
+  .card-index {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 999px;
+    background: rgba(250, 248, 240, 0.08);
+    color: rgba(244, 241, 230, 0.88);
+    font-size: 0.85rem;
+    letter-spacing: 0.08em;
+  }
+
+  .card-mood {
+    margin: 1rem 0 0;
+    color: rgba(164, 210, 171, 0.84);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+  }
+
+  .trilogy-card h3 {
+    margin: 0.6rem 0 0;
+    font-size: 1.45rem;
+    line-height: 1.2;
+  }
+
+  .trilogy-card p:last-child {
+    margin: 0.85rem 0 0;
+    color: rgba(233, 235, 227, 0.72);
+    line-height: 1.9;
+  }
+
+  .essay-grid {
+    margin-top: 1.8rem;
+  }
+
+  .prose-panel h2,
+  .fragment-panel h2,
+  .archive-panel h2 {
+    margin-top: 0.55rem;
+  }
+
+  .fragment-list {
+    display: grid;
+    gap: 0.9rem;
+    margin-top: 1rem;
+  }
+
+  .fragment-list p {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.75rem;
+    margin: 0;
+    color: rgba(243, 242, 233, 0.92);
+    line-height: 1.85;
+  }
+
+  .fragment-list span {
+    color: rgba(166, 214, 171, 0.9);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    padding-top: 0.28rem;
+  }
+
+  .fragment-tail {
+    margin: 1.2rem 0 0;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(222, 229, 213, 0.1);
+    color: rgba(227, 231, 223, 0.72);
+    line-height: 1.9;
+  }
+
+  .archive-panel {
+    display: grid;
+    gap: 1.2rem;
+    margin-top: 1.8rem;
+    align-items: center;
+  }
+
+  .archive-copy {
+    margin: 0.9rem 0 0;
+    max-width: 35rem;
+  }
+
+  .archive-meta {
+    margin-top: 0.8rem;
+  }
+
+  .download-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    min-height: 3.4rem;
+    padding: 0.9rem 1.4rem;
+    border-radius: 999px;
+    background: linear-gradient(135deg, rgba(171, 218, 168, 0.92), rgba(239, 210, 146, 0.94));
+    color: #102014;
+    font-size: 0.95rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+  }
+
+  .download-link:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 12px 28px rgba(144, 196, 140, 0.18);
+  }
+
+  @media (min-width: 820px) {
+    .ancestor-page {
+      padding-left: 2rem;
+      padding-right: 2rem;
+    }
+
+    .glass-panel {
+      padding: 1.7rem;
+    }
+
+    .trilogy-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .archive-panel {
+      grid-template-columns: minmax(0, 1fr) auto;
+      padding: 1.7rem;
+    }
+  }
+
+  @media (min-width: 960px) {
+    .hero-grid {
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+      align-items: stretch;
+    }
+
+    .essay-grid {
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, 0.88fr);
+    }
+
+    .video-panel {
+      min-height: 100%;
+    }
+  }
+</style>

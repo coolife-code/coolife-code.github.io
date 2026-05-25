@@ -1,6 +1,14 @@
 ---
 import { allItems } from '../../data/site';
 import DotMatrixText from '../DotMatrixText.astro';
+
+const ifnoaiPosterVideo = '/1mposter%20-%20Existential%20Cry%20%5B2031830364373528578%5D.mp4';
+const ourAncestorsPreviewVideo = '/1000063173.mp4';
+const csustdatePreviewImage = '/1000059777.jpg';
+const aletheiaPreviewImage = '/1000057283.jpg';
+const reacordPreviewImage = '/1000058227.jpg';
+const aresBookPreviewImage = '/20260515_192132.jpg';
+const mirageBookPreviewImage = '/grok_image_1776935487975.jpg';
 ---
 
 <!-- 深度预览层 -->
@@ -19,8 +27,99 @@ import DotMatrixText from '../DotMatrixText.astro';
           style={`--item-index: ${index};`}
         >
           <div class="item-frame">
-            <div class="item-image-placeholder">
-              <span class="item-title-text">{item.title}</span>
+            <div class={`item-image-placeholder ${item.slug === 'ifnoai' || item.slug === 'our-ancestors' ? 'item-image-placeholder-video' : ''} ${item.slug === 'csustdate' || item.slug === 'aleth-eia' || item.slug === 'reacord' || item.slug === 'ares-childhood-1' || item.slug === 'haishi-shenlou' ? 'item-image-placeholder-photo' : ''}`}>
+              {item.slug === 'ifnoai' ? (
+                <>
+                  <video
+                    class="item-preview-video"
+                    src={ifnoaiPosterVideo}
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    aria-hidden="true"
+                    disablepictureinpicture
+                    disableremoteplayback
+                    tabindex="-1"
+                  ></video>
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : item.slug === 'our-ancestors' ? (
+                <>
+                  <video
+                    class="item-preview-video"
+                    src={ourAncestorsPreviewVideo}
+                    autoplay
+                    muted
+                    loop
+                    playsinline
+                    preload="metadata"
+                    aria-hidden="true"
+                    disablepictureinpicture
+                    disableremoteplayback
+                    tabindex="-1"
+                  ></video>
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : item.slug === 'csustdate' ? (
+                <>
+                  <img
+                    class="item-preview-image"
+                    src={csustdatePreviewImage}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : item.slug === 'aleth-eia' ? (
+                <>
+                  <img
+                    class="item-preview-image"
+                    src={aletheiaPreviewImage}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : item.slug === 'reacord' ? (
+                <>
+                  <img
+                    class="item-preview-image"
+                    src={reacordPreviewImage}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : item.slug === 'ares-childhood-1' ? (
+                <>
+                  <img
+                    class="item-preview-image"
+                    src={aresBookPreviewImage}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : item.slug === 'haishi-shenlou' ? (
+                <>
+                  <img
+                    class="item-preview-image"
+                    src={mirageBookPreviewImage}
+                    alt=""
+                    aria-hidden="true"
+                    loading="lazy"
+                  />
+                  <span class="item-title-text item-title-text-overlay">{item.title}</span>
+                </>
+              ) : (
+                <span class="item-title-text">{item.title}</span>
+              )}
             </div>
           </div>
           <span class="item-label">{item.type.toUpperCase()} · {String(index + 1).padStart(2, '0')}</span>

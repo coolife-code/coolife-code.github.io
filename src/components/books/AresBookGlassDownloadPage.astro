@@ -1,0 +1,289 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { aresBook } from '../../data/aresBook';
+
+const downloadHref = '/images/books/%E9%98%BF%E7%91%9E%E6%96%AF%E7%9A%84%E7%AB%A5%E5%B9%B4%201.docx';
+
+const tags = ['大一上', '期末', '晚自习', '短篇科幻'];
+
+const opening = [
+  '这篇小说写在大一上的期末，写在一段有点疲惫的晚自习里。',
+  '那时候我反复在想，一旦技术开始替人保存记忆、复制人格、延长生命，人到底还剩下些什么。',
+  '所以我没有把它写成一篇只谈设定的科幻。我更想写一种主观的眩晕，像一个人抬头望向星空时，忽然怀疑自己是不是已经走得太远。',
+];
+
+const fragments = [
+  '我一直觉得，一个人之所以还是原来的那个人，不只是因为他记得很多事，而是因为他心里始终有一个最早的地方没有松开。那个地方可能就是童年，可能是某种很难解释的初始感受，它不响亮，但一直在。',
+  '所以我写阿瑞斯的时候，写的也不只是一个庞大的人造智能。我更想写一种持续向前的东西，写它怎样越过时间、越过技术、越过人的尺度，最后反而逼得我回头去想，人到底靠什么把自己固定在这个世界上。',
+  '我最在意的其实不是答案。我更在意的是，当一个存在走得越来越远、越来越强、越来越接近“正确”的时候，它会不会反而和人一样，在某个瞬间失去方向。那种失重感，可能才是这篇小说真正开始的地方。',
+];
+
+const sideNotes = [
+  '灵感来源于一个很朴素、也很危险的问题：当 AI 只盯着奖励和目标时，它会不会开始偏离人真正想要的东西。',
+  '我后来把这个念头慢慢写开，写成童年、永生、虚拟世界、仿制人与深空远航。',
+  '这不是书评页。你如果愿意，直接下载原稿去读就好。',
+];
+---
+
+<Layout title={`${aresBook.title} - 手稿页`} description={aresBook.intro} currentPage="/books">
+  <section class="paper-page">
+    <div class="top-band"></div>
+
+    <div class="page-inner">
+      <a href="/books" class="back-link">返回 Books</a>
+
+      <header class="poster-head">
+        <div class="poster-mark">A.</div>
+        <div class="poster-copy">
+          <p class="eyebrow">Personal Archive / Novel</p>
+          <h1>{aresBook.title}</h1>
+          <p class="hero-line">我想把它放在这里，不是为了介绍它，而是为了让它像一张被钉在墙上的手稿，继续说话。</p>
+        </div>
+      </header>
+
+      <section class="hero-stage">
+        <div class="vertical-title" aria-hidden="true">ARES</div>
+
+        <div class="main-column">
+          <div class="tag-row" aria-label="作品标签">
+            {tags.map((tag) => (
+              <span class="tag-chip">{tag}</span>
+            ))}
+          </div>
+
+          <div class="opening-text">
+            {opening.map((item) => (
+              <p>{item}</p>
+            ))}
+          </div>
+
+          <blockquote class="center-quote">
+            “人类会迷路，但人造智能也会迷路吗？”
+          </blockquote>
+        </div>
+
+        <aside class="side-column">
+          <div class="note-block">
+            {sideNotes.map((item) => (
+              <p>{item}</p>
+            ))}
+          </div>
+
+          <a href={downloadHref} download="阿瑞斯的童年 1.docx" class="download-link">
+            下载小说原稿
+          </a>
+          <span class="download-meta">DOCX / 原稿存档</span>
+        </aside>
+      </section>
+
+      <section class="fragment-panel">
+        <div class="fragment-grid">
+          {fragments.map((item) => (
+            <p>{item}</p>
+          ))}
+        </div>
+      </section>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  :global(html) {
+    --text-color: #111111;
+    --bg-color: #ece8e0;
+  }
+
+  :global(body) {
+    background:
+      linear-gradient(180deg, #b79d84 0 22px, #ece8e0 22px 100%),
+      linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+    background-size: 100% 100%, 24px 24px;
+    color: #111111;
+  }
+
+  .paper-page {
+    position: relative;
+    min-height: 100vh;
+    padding: 6.5rem 1.5rem 4rem;
+  }
+
+  .top-band {
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 22px;
+    background: #b79d84;
+  }
+
+  .page-inner {
+    max-width: 1180px;
+    margin: 0 auto;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    color: #272727;
+    text-decoration: none;
+    font-size: 0.82rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  .back-link:hover {
+    opacity: 0.68;
+  }
+
+  .poster-head {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap: 1rem;
+    align-items: start;
+    margin-top: 1.5rem;
+  }
+
+  .poster-mark {
+    font-size: clamp(3.1rem, 8vw, 5.6rem);
+    font-weight: 900;
+    line-height: 0.85;
+  }
+
+  .eyebrow,
+  .download-meta {
+    color: rgba(17, 17, 17, 0.58);
+    font-size: 0.78rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+
+  .poster-copy h1 {
+    margin: 0.5rem 0 0;
+    font-size: clamp(3rem, 9vw, 8rem);
+    line-height: 0.9;
+    letter-spacing: -0.05em;
+    font-weight: 800;
+  }
+
+  .hero-line {
+    margin: 1rem 0 0;
+    max-width: 31rem;
+    color: rgba(17, 17, 17, 0.78);
+    line-height: 1.85;
+    font-size: 1rem;
+  }
+
+  .hero-stage {
+    display: grid;
+    gap: 1.4rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(17, 17, 17, 0.16);
+  }
+
+  .vertical-title {
+    display: none;
+  }
+
+  .main-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .tag-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+  }
+
+  .tag-chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.34rem 0.72rem;
+    border: 1px solid rgba(17, 17, 17, 0.18);
+    border-radius: 999px;
+    color: rgba(17, 17, 17, 0.76);
+    font-size: 0.85rem;
+  }
+
+  .opening-text,
+  .note-block,
+  .fragment-grid {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .opening-text p,
+  .note-block p,
+  .fragment-grid p {
+    margin: 0;
+    color: #1b1b1b;
+    font-size: 1.02rem;
+    line-height: 2;
+  }
+
+  .center-quote {
+    margin: 0;
+    max-width: 34rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(17, 17, 17, 0.16);
+    font-size: clamp(1.6rem, 4vw, 2.7rem);
+    line-height: 1.6;
+    letter-spacing: -0.02em;
+  }
+
+  .side-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .download-link {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    padding-bottom: 0.2rem;
+    border-bottom: 2px solid #111111;
+    color: #111111;
+    text-decoration: none;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: 0.01em;
+  }
+
+  .download-link:hover {
+    opacity: 0.7;
+  }
+
+  .fragment-panel {
+    margin-top: 2.2rem;
+    padding-top: 1rem;
+    border-top: 1px solid rgba(17, 17, 17, 0.16);
+  }
+
+  @media (min-width: 900px) {
+    .poster-head {
+      gap: 1.5rem;
+    }
+
+    .hero-stage {
+      grid-template-columns: minmax(70px, 90px) minmax(0, 1.35fr) minmax(280px, 0.72fr);
+      gap: 2rem;
+      align-items: start;
+    }
+
+    .vertical-title {
+      display: block;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+      font-size: 4.4rem;
+      line-height: 0.88;
+      letter-spacing: -0.06em;
+      color: rgba(17, 17, 17, 0.16);
+      font-weight: 800;
+    }
+
+    .fragment-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+</style>

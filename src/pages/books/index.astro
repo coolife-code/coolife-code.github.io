@@ -1,29 +1,6 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-
-const books = [
-  {
-    slug: 'the-great-gatsby',
-    title: 'THE GREAT GATSBY',
-    author: 'F. Scott Fitzgerald',
-    year: '1925',
-    theme: 'gold',
-  },
-  {
-    slug: '1984',
-    title: '1984',
-    author: 'George Orwell',
-    year: '1949',
-    theme: 'red',
-  },
-  {
-    slug: 'crime-and-punishment',
-    title: 'CRIME AND PUNISHMENT',
-    author: 'Fyodor Dostoevsky',
-    year: '1866',
-    theme: 'dark',
-  },
-];
+import { books } from '../../data/books';
 ---
 
 <Layout title="Books - Personal Page" currentPage="/books">
@@ -33,27 +10,25 @@ const books = [
         <h1 class="page-title">
           <span class="title-word" style="animation-delay: 0s">BOOKS</span>
         </h1>
-        <p class="page-subtitle">
-          MY READING JOURNEY
-        </p>
+        <p class="page-subtitle">RECOMMENDED READING</p>
+        <p class="page-description">书是时光的褶皱，藏着过往所有未说出口的灵魂。</p>
       </header>
 
       <nav class="items-nav">
         {books.map((book, index) => (
-          <a 
+          <a
             href={`/books/${book.slug}`}
             class="item-link"
             style={`animation-delay: ${(index + 1) * 0.1}s`}
           >
             <span class="item-number">{String(index + 1).padStart(2, '0')}</span>
             <div class="item-info">
-              <h2 class="item-title">
-                {book.title}
-              </h2>
-              <p class="item-meta">
-                {book.author} · {book.year}
-              </p>
+              <p class="item-category">{book.category}</p>
+              <h2 class="item-title">{book.title}</h2>
+              <p class="item-meta">{book.author} · {book.year}</p>
+              <p class="item-subtitle">{book.subtitle}</p>
             </div>
+            <span class="item-arrow">进入阅读</span>
           </a>
         ))}
       </nav>
@@ -134,6 +109,13 @@ const books = [
     font-size: 0.875rem;
   }
 
+  .page-description {
+    max-width: 40rem;
+    margin: 1.2rem auto 0;
+    color: rgb(107, 114, 128);
+    line-height: 1.8;
+  }
+
   @media (min-width: 768px) {
     .page-subtitle {
       font-size: 1rem;
@@ -158,6 +140,7 @@ const books = [
     gap: 2rem;
     padding: 1.5rem 1rem;
     border-bottom: 1px solid rgb(31, 41, 55);
+    justify-content: space-between;
     transition: all 0.5s ease-in-out;
     opacity: 0;
     animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
@@ -206,11 +189,18 @@ const books = [
     flex: 1;
   }
 
+  .item-category {
+    margin-bottom: 0.65rem;
+    color: rgb(34, 197, 94);
+    font-size: 0.78rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+  }
+
   .item-title {
     font-size: 1.25rem;
     font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
+    letter-spacing: 0.06em;
     transition: all 0.5s ease-in-out;
   }
 
@@ -232,6 +222,25 @@ const books = [
     letter-spacing: 0.15em;
     text-transform: uppercase;
     margin-top: 0.25rem;
+  }
+
+  .item-subtitle {
+    margin-top: 0.8rem;
+    color: rgb(156, 163, 175);
+    line-height: 1.8;
+  }
+
+  .item-arrow {
+    color: rgb(107, 114, 128);
+    font-size: 0.78rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    transition: transform 0.5s ease, color 0.5s ease;
+  }
+
+  .item-link:hover .item-arrow {
+    transform: translateX(8px);
+    color: rgb(229, 231, 235);
   }
 
   @media (min-width: 768px) {

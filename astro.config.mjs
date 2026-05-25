@@ -6,6 +6,9 @@ import tailwindcss from '@tailwindcss/vite';
 // https://astro.build/config
 export default defineConfig({
   site: 'https://coolife-code.github.io',
+  devToolbar: {
+    enabled: false
+  },
   vite: {
     plugins: [tailwindcss()]
   }

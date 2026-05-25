@@ -1,3 +1,5 @@
+import { books } from './books';
+
 // 站点基本信息
 export const siteConfig = {
   title: '- Even the light hesitates - coolife-code',
@@ -100,7 +102,11 @@ export const allItems: ContentItem[] = [
     depth: index + 1,
   })),
   // Books
-  { type: 'book', slug: 'the-great-gatsby', title: 'THE GREAT GATSBY', image: '/images/book1.jpg', depth: 5 },
-  { type: 'book', slug: '1984', title: '1984', image: '/images/book2.jpg', depth: 6 },
-  { type: 'book', slug: 'crime-and-punishment', title: 'CRIME AND PUNISHMENT', image: '/images/book3.jpg', depth: 7 },
+  ...books.map((book, index) => ({
+    type: 'book' as const,
+    slug: book.slug,
+    title: book.title,
+    image: book.cover,
+    depth: works.length + index + 1,
+  })),
 ];
